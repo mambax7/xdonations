@@ -1,10 +1,9 @@
-<!-- 
 <form action="https://<{$block.paypal_url}>/cgi-bin/webscr"
-target="paypal" method="post"> <{$block.lang_select}><br />
+target="paypal" method="post"> <{$block.lang_select}><br>
 <select name="amount">
     <{$block.amounts}>
-</select> <br />
-<br />
+</select> <br>
+<br>
 <table>
     <tr>
         <td colspan="2"><{$block.prompt}></td>
@@ -31,7 +30,7 @@ target="paypal" method="post"> <{$block.lang_select}><br />
     type="hidden" name="custom" value="<{$block.custom}>"> <input
     type="hidden" name="cancel_return" value="<{$block.pp_cancel}>">
 <input type="hidden" name="return" value="<{$block.pp_thanks}>">
-<input type="hidden" name="image_url" value="<{$block.pp_image}>"><br />
-<br />
+<input type="hidden" name="image_url" value="<{$block.pp_image}>"><br>
+<br>
 <input type="submit" value="<{$block.submit_button}>" border="0"
 name="I1"></form>

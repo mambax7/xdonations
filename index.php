@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -30,18 +30,18 @@
 /************************************************************************/
 
 include __DIR__ . '/header.php';
-include_once  dirname(__DIR__) . '/include/functions.php';
-$xoopsOption['template_main'] = 'donations_main.tpl';
+require_once __DIR__ . '/class/utility.php';
+$GLOBALS['xoopsOption']['template_main'] = 'donations_main.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-$tr_config  = configInfo(); //load the module configuration settings
+$tr_config  = XdonationsUtility::getConfigInfo(); //load the module configuration settings
 $paypal_url = explode('|', $tr_config['paypal_url']);
 $paypal_url = $paypal_url[0];
 
 //determine the currency
 $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
 $PP_CURR_CODE = $PP_CURR_CODE[0];
-$currencySign    = defineCurrency($PP_CURR_CODE);
+$currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
 
 $swingd            = $tr_config['swing_day'];
 $PP_RECEIVER_EMAIL = $tr_config['receiver_email'];
@@ -72,7 +72,7 @@ $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . " WHERE 
 $Recordset1 = $xoopsDB->query($sql);
 
 $DONATION_AMOUNTS = '';
-while (false != ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1))) {
+while (false !== ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1))) {
     if (is_numeric($row_Recordset1['value']) && $row_Recordset1['value'] > 0) {
         if ($row_Recordset1['subtype'] == $tr_config['don_amt_checked']) {
             $checked = ' selected';
@@ -83,14 +83,14 @@ while (false != ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1))) {
         $DONATION_AMOUNTS .= '<option value="' . $row_Recordset1['value'] . '" ' . $checked . ' > ' . $currencySign . $row_Recordset1['value'] . '</option>' . "\n";
     }
 }
-$DONATION_AMOUNTS .= '<option value="0"> ' . _MD_DON_OTHER . ' </option>';
+$DONATION_AMOUNTS .= '<option value="0"> ' . _MD_XDONATION_OTHER . ' </option>';
 
 $uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 
 // Ok, output the page
 
 $xoopsTpl->assign('CUSTOM', $uid);
-$xoopsTpl->assign('DON_TITLE', _MD_DON_TITLE);
+$xoopsTpl->assign('DON_TITLE', _MD_XDONATION_TITLE);
 $xoopsTpl->assign('PP_RECEIVER_EMAIL', $PP_RECEIVER_EMAIL);
 $xoopsTpl->assign('PP_ITEMNAME', $PP_ITEMNAME);
 $xoopsTpl->assign('DONATION_AMOUNTS', $DONATION_AMOUNTS);
@@ -104,13 +104,13 @@ $xoopsTpl->assign('PP_TY_URL', $PP_TY_URL);
 $xoopsTpl->assign('PP_IMAGE_URL', $PP_IMAGE_URL);
 $xoopsTpl->assign('DON_SUB_IMG_DIMS', $DON_SUB_IMG_DIMS);
 $xoopsTpl->assign('DON_BUTTON_SUBMIT', $DON_BUTTON_SUBMIT);
-$xoopsTpl->assign('MAKEADON', _MD_DON_MAKEADON);
-$xoopsTpl->assign('SELECTAMT', _MD_DON_SELECTAMT);
+$xoopsTpl->assign('MAKEADON', _MD_XDONATION_MAKEADON);
+$xoopsTpl->assign('SELECTAMT', _MD_XDONATION_SELECTAMT);
 $xoopsTpl->assign('SHOWNAME', $tr_config['don_name_prompt']);
-$xoopsTpl->assign('DONTHISMONTH', _MD_DON_DONTHISMONTH);
-$xoopsTpl->assign('DON_NAME', _MD_DON_NAME);
+$xoopsTpl->assign('DONTHISMONTH', _MD_XDONATION_DONTHISMONTH);
+$xoopsTpl->assign('DON_NAME', _MD_XDONATION_NAME);
 $xoopsTpl->assign('DON_DIR', $xoopsModule->getVar('dirname'));
-$xoopsTpl->assign('SUBMIT_BUTTON', _MD_DON_SUBMIT_BUTTON);
+$xoopsTpl->assign('SUBMIT_BUTTON', _MD_XDONATION_SUBMIT_BUTTON);
 $xoopsTpl->assign('PAYPAL_URL', $paypal_url);
 
 include __DIR__ . '/footer.php';

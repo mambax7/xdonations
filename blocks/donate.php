@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -35,7 +35,7 @@ $moduleDirName = basename(dirname(__DIR__));
 
 xoops_loadLanguage('main', $moduleDirName);
 
-include_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php";
+require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/utility.php";
 
 /**
  * @param $options
@@ -46,13 +46,13 @@ function b_donations_donate_show($options)
     global $xoopsDB, $xoopsUser;
 
     $moduleDirName = basename(dirname(__DIR__));
-    $tr_config     = configInfo();
+    $tr_config     = XdonationsUtility::getConfigInfo();
     $paypal_url    = explode('|', $tr_config['paypal_url']);
     $paypal_url    = $paypal_url[0];
     //determine the currency
     $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
     $PP_CURR_CODE = $PP_CURR_CODE[0];
-    $currencySign    = defineCurrency($PP_CURR_CODE);
+    $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
 
     $block = array();
 
@@ -79,7 +79,7 @@ function b_donations_donate_show($options)
     $Recordset1 = $xoopsDB->query($sql);
 
     $DONATION_AMOUNTS = '';
-    while (false != ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1))) {
+    while (false !== ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1))) {
         if (is_numeric($row_Recordset1['value']) && $row_Recordset1['value'] > 0) {
             if ($row_Recordset1['subtype'] == $tr_config['don_amt_checked']) {
                 $checked               = ' selected';
@@ -90,7 +90,7 @@ function b_donations_donate_show($options)
             $DONATION_AMOUNTS .= '<option value="' . $row_Recordset1['value'] . '" ' . $checked . ' > ' . $currencySign . $row_Recordset1['value'] . '</option>' . "\n";
         }
     }
-    $DONATION_AMOUNTS .= '<option value="0"> ' . _MB_DON_OTHER_AMOUNT . ' </option>';
+    $DONATION_AMOUNTS .= '<option value="0"> ' . _MB_XDONATION_OTHER_AMOUNT . ' </option>';
 
     // Ok, output the page
 
@@ -108,9 +108,9 @@ function b_donations_donate_show($options)
     $block['pp_thanks']     = $PP_TY_URL;
     $block['pp_image']      = $PP_IMAGE_URL;
     $block['sub_img']       = $DON_SUB_IMG_DIMS;
-    $block['submit_button'] = _MB_DON_SUBMIT_BUTTON;
+    $block['submit_button'] = _MB_XDONATION_SUBMIT_BUTTON;
     $block['paypal_url']    = $paypal_url;
-    $block['lang_select']   = _MB_DON_SELECTAMT;
+    $block['lang_select']   = _MB_XDONATION_SELECTAMT;
     $block['xdon_dir']      = $moduleDirName;
 
     return $block;

@@ -1,6 +1,5 @@
-<!-- 
 <table
-    style="border-width: 0px; padding: 0px; margin: 0px; width: 100%; font-size: smaller;">
+    style="border-width: 0; padding: 0; margin: 0; width: 100%; font-size: smaller;">
     <tr>
         <td style="width: 100%; text-align: center;" colspan="2"><a
             href="<{$block.DON_URL}>"> <img src="<{$block.DM_BUTTON}>"
@@ -26,7 +25,7 @@
     </tr>
     <tr>
         <td style="width: 55%; text-align: right;"><{$block.DM_NETBAL}>:</td>
-        <td style="text =align: left;"><{$block.DM_NET}></td>
+        <td style="text-align: left;"><{$block.DM_NET}></td>
     </tr>
     <tr>
         <td style="width: 55%; text-align: right; font-weight: bold;"><{$block.DM_REMAIN}>:</td>
@@ -35,7 +34,7 @@
 </table>
 <{ if ($block.show_don == 1) && ($block.content != '')}>
 <table
-    style="border-width: 0px; padding: 0px; margin: 0px; width: 100%;">
+    style="border-width: 0; padding: 0; margin: 0; width: 100%;">
     <tr>
         <td style="width: 100%;">
         <hr />

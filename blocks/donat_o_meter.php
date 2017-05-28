@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -34,7 +34,7 @@
 $xdBlockDir = basename(dirname(__DIR__));
 xoops_loadLanguage('main', $xdBlockDir);
 
-include_once XOOPS_ROOT_PATH . "/modules/{$xdBlockDir}/include/functions.php";
+require_once XOOPS_ROOT_PATH . "/modules/{$xdBlockDir}/class/utility.php";
 
 /**
  * @param $options
@@ -45,16 +45,16 @@ function b_donations_donatometer_show($options)
     global $xoopsDB;
     $xdBlockDir = basename(dirname(__DIR__));
 
-    $tr_config = configInfo();
+    $tr_config = XdonationsUtility::getConfigInfo();
     //determine the currency
     $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
     $PP_CURR_CODE = $PP_CURR_CODE[0];
-    $currencySign    = defineCurrency($PP_CURR_CODE);
+    $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
 
     $block = array();
 
     $swingd = $tr_config['swing_day'];
-    if (($swingd < 0) or ($swingd > 31)) {
+    if (($swingd < 0) || ($swingd > 31)) {
         $swingd = 6;
     }
     $dmshowdate = $options[1];
@@ -70,13 +70,60 @@ function b_donations_donatometer_show($options)
 
     // Check the current day against the swing day to execute the proper query
     if (date('d') >= $swingd) {
-        $query_Recordset1 = 'SELECT count(mc_gross) AS count, sum(mc_gross) AS gross, sum(' . "mc_gross-mc_fee) AS net, date_format( now(),'%M') AS mon, date_format( subdate( date_format( adddate(" . "now(), INTERVAL 1 MONTH),'%Y-%c-1'), INTERVAL 1 DAY), '%b %e') AS due_by, date_format(now(),'%b') AS " . 'mon_short FROM ' . $xoopsDB->prefix('donations_transactions') . ' WHERE (payment_date >= date_format(' . "now(),'%Y-%m-" . $swingd . "'))";
+        $query_Recordset1 = 'SELECT count(mc_gross) AS count, sum(mc_gross) AS gross, sum('
+                            . "mc_gross-mc_fee) AS net, date_format( now(),'%M') AS mon, date_format( subdate( date_format( adddate("
+                            . "now(), INTERVAL 1 MONTH),'%Y-%c-1'), INTERVAL 1 DAY), '%b %e') AS due_by, date_format(now(),'%b') AS "
+                            . 'mon_short FROM '
+                            . $xoopsDB->prefix('donations_transactions')
+                            . ' WHERE (payment_date >= date_format('
+                            . "now(),'%Y-%m-"
+                            . $swingd
+                            . "'))";
 
-        $query_Recordset3 = 'select custom as muser_id, option_selection1 as showname, ' . "date_format( payment_date, '%b-%e') as date, concat('" . $currencySign . "',sum(mc_gross)) as amt " . 'from ' . $xoopsDB->prefix('donations_transactions') . ' where (payment_date >= date_format( ' . "now(), '%Y-%m-" . $swingd . "')) group by txn_id order by payment_date desc";
+        $query_Recordset3 = 'select custom as muser_id, option_selection1 as showname, '
+                            . "date_format( payment_date, '%b-%e') as date, concat('"
+                            . $currencySign
+                            . "',sum(mc_gross)) as amt "
+                            . 'from '
+                            . $xoopsDB->prefix('donations_transactions')
+                            . ' where (payment_date >= date_format( '
+                            . "now(), '%Y-%m-"
+                            . $swingd
+                            . "')) group by txn_id order by payment_date desc";
     } else {
-        $query_Recordset1 = 'select count(mc_gross) as count, sum(mc_gross) as gross, sum(mc_gross -' . ' mc_fee) as net, date_format( subdate( now(), interval ' . $swingd . " day), '%M') as mon," . " 'Now!' as due_by, date_format( subdate( now(), interval " . $swingd . " day), '%b') as mon_short" . ' from ' . $xoopsDB->prefix('donations_transactions') . " where (payment_date < date_format( now(), '%Y-%m-" . $swingd . "')" . ') and payment_date > date_format( subdate( now(), interval ' . $swingd . " day), '%Y-%m-" . $swingd . "')";
+        $query_Recordset1 = 'select count(mc_gross) as count, sum(mc_gross) as gross, sum(mc_gross -'
+                            . ' mc_fee) as net, date_format( subdate( now(), interval '
+                            . $swingd
+                            . " day), '%M') as mon,"
+                            . " 'Now!' as due_by, date_format( subdate( now(), interval "
+                            . $swingd
+                            . " day), '%b') as mon_short"
+                            . ' from '
+                            . $xoopsDB->prefix('donations_transactions')
+                            . " where (payment_date < date_format( now(), '%Y-%m-"
+                            . $swingd
+                            . "')"
+                            . ') and payment_date > date_format( subdate( now(), interval '
+                            . $swingd
+                            . " day), '%Y-%m-"
+                            . $swingd
+                            . "')";
 
-        $query_Recordset3 = 'select custom as muser_id, option_selection1 as showname, ' . "date_format( payment_date, '%b-%e') as date, concat('" . $currencySign . "', sum(mc_gross)) as amt " . 'from ' . $xoopsDB->prefix('donations_transactions') . ' where (payment_date < date_format(now(),' . " '%Y-%m-" . $swingd . "')) and payment_date > date_format( subdate( now(),interval " . $swingd . ' ' . "day), '%Y-%m-" . $swingd . "') group by txn_id order by payment_date desc";
+        $query_Recordset3 = 'select custom as muser_id, option_selection1 as showname, '
+                            . "date_format( payment_date, '%b-%e') as date, concat('"
+                            . $currencySign
+                            . "', sum(mc_gross)) as amt "
+                            . 'from '
+                            . $xoopsDB->prefix('donations_transactions')
+                            . ' where (payment_date < date_format(now(),'
+                            . " '%Y-%m-"
+                            . $swingd
+                            . "')) and payment_date > date_format( subdate( now(),interval "
+                            . $swingd
+                            . ' '
+                            . "day), '%Y-%m-"
+                            . $swingd
+                            . "') group by txn_id order by payment_date desc";
     }
 
     // Get the donation totals
@@ -84,7 +131,12 @@ function b_donations_donatometer_show($options)
     $row_Recordset1 = $xoopsDB->fetchArray($Recordset1);
     //If there are not records, then get "null" data
     if (!$row_Recordset1) {
-        $query_Recordset1 = "select '0' as count, '0' as gross, '0' as net, date_format( now()," . "'%M') as mon, date_format( subdate( date_format( adddate( now(), interval 1 month), '%Y-%c-1')," . " interval 1 day), '%b %e') as due_by, date_format( now(), '%b') as mon_short from " . ' ' . $xoopsDB->prefix('donations_transactions') . '';
+        $query_Recordset1 = "select '0' as count, '0' as gross, '0' as net, date_format( now(),"
+                            . "'%M') as mon, date_format( subdate( date_format( adddate( now(), interval 1 month), '%Y-%c-1'),"
+                            . " interval 1 day), '%b %e') as due_by, date_format( now(), '%b') as mon_short from "
+                            . ' '
+                            . $xoopsDB->prefix('donations_transactions')
+                            . '';
         $Recordset1       = $xoopsDB->query($query_Recordset1);
         $row_Recordset1   = $xoopsDB->fetchArray($Recordset1);
     }
@@ -136,15 +188,15 @@ function b_donations_donatometer_show($options)
         $var = '';
         while (($row_Recordset3 = $xoopsDB->fetchArray($Recordset3)) && ($i != $options[0])) {
             // Refunded transactions will show up with $0 amount
-            if ($row_Recordset3['amt'] > "$0") {
+            if ($row_Recordset3['amt'] > '$0') {
                 $dmalign = 'center';
-                $var .= "<tr><td style=\"width: 100%; text-align: {$dmalign};\" colspan=\"2\">\n";
+                $var     .= "<tr><td style=\"width: 100%; text-align: {$dmalign};\" colspan=\"2\">\n";
                 // Observe the user's wish regarding revealing their name
                 $muser_id = $row_Recordset3['muser_id'];
-                if (strcmp($row_Recordset3['showname'], 'Yes') == 0 && ($userfoin = mgetUserInfo($muser_id))) {
+                if (strcmp($row_Recordset3['showname'], 'Yes') == 0 && ($userfoin = XdonationsUtility::getUserInfo($muser_id))) {
                     $var .= "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $userfoin->getVar('uid') . "'>" . $userfoin->getVar('uname') . "</a>\n";
                 } else {
-                    $var .= _MB_DON_ANONYMOUS_SHORT;
+                    $var .= _MB_XDONATION_ANONYMOUS_SHORT;
                 }
                 $var .= '&nbsp;';
                 if ($dmshowamt) {
@@ -161,21 +213,21 @@ function b_donations_donatometer_show($options)
 
     if ($difference >= 0) {
         $DM_OVERAGE          = sprintf($currencySign . '%.02f', $difference);
-        $block['DM_REMAIN']  = _MB_DON_SURPLUS;
+        $block['DM_REMAIN']  = _MB_XDONATION_SURPLUS;
         $block['DM_BALANCE'] = $DM_OVERAGE;
     } else {
-        $block['DM_REMAIN']  = _MB_DON_LEFT2GO;
+        $block['DM_REMAIN']  = _MB_XDONATION_LEFT2GO;
         $block['DM_BALANCE'] = "<span style=\"color: #CC0000;\">{$DM_LEFT}</span>";
     }
 
     // Define language constants
-    $block['DM_STAT']      = _MB_DON_STAT;
-    $block['DM_MONGOAL']   = _MB_DON_MONGOAL;
-    $block['DM_DUEDATE']   = _MB_DON_DUEDATE;
-    $block['DM_GROSSAMT']  = _MB_DON_GROSSAMT;
-    $block['DM_NETBAL']    = _MB_DON_NETBAL;
-    $block['DM_DONATIONS'] = _MB_DON_DONATIONS;
-    $block['DM_MAKEDON']   = _MB_DON_MAKEDON;
+    $block['DM_STAT']      = _MB_XDONATION_STAT;
+    $block['DM_MONGOAL']   = _MB_XDONATION_MONGOAL;
+    $block['DM_DUEDATE']   = _MB_XDONATION_DUEDATE;
+    $block['DM_GROSSAMT']  = _MB_XDONATION_GROSSAMT;
+    $block['DM_NETBAL']    = _MB_XDONATION_NETBAL;
+    $block['DM_DONATIONS'] = _MB_XDONATION_DONATIONS;
+    $block['DM_MAKEDON']   = _MB_XDONATION_MAKEDON;
 
     // Display block
     $block['show_don'] = $show_don;
@@ -190,8 +242,8 @@ function b_donations_donatometer_show($options)
  */
 function b_donations_donatometer_edit($options)
 {
-    $form = _MB_DON_NUM_DONORS . ":&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "'  size='4'/>";
-    $form .= '<br />' . _MB_DON_REVEAL_DATES . ":&nbsp;<select size='1' name='options[1]'><option value='1'";
+    $form = _MB_XDONATION_NUM_DONORS . ":&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "'  size='4'/>";
+    $form .= '<br>' . _MB_XDONATION_REVEAL_DATES . ":&nbsp;<select size='1' name='options[1]'><option value='1'";
     if ($options[1] == 1) {
         $form .= ' selected';
     }
@@ -200,7 +252,7 @@ function b_donations_donatometer_edit($options)
         $form .= ' selected';
     }
     $form .= ' />' . _NO . '</option></select>';
-    $form .= '<br />' . _MB_DON_REVEAL_AMOUNTS . ":&nbsp;<select size='1' name='options[2]'><option value='1'";
+    $form .= '<br>' . _MB_XDONATION_REVEAL_AMOUNTS . ":&nbsp;<select size='1' name='options[2]'><option value='1'";
     if ($options[2] == 1) {
         $form .= ' selected';
     }
@@ -209,11 +261,11 @@ function b_donations_donatometer_edit($options)
         $form .= ' selected';
     }
     $form .= ' />' . _NO . '</option></select>';
-    $form .= '<br />' . _MB_DON_BUTTON_URL . ':&nbsp;';
+    $form .= '<br>' . _MB_XDONATION_BUTTON_URL . ':&nbsp;';
     $form .= "<input size='70' name='options[3]' type='text' value='" . $options[3] . "'>";
-    $form .= '<br />' . _MB_DON_BUTTON_DIMS . ':&nbsp;';
-    $form .= _MB_DON_WIDTH . "&nbsp;<input size='4' name='options[4]' type='text' value='" . $options[4] . "'>";
-    $form .= '&nbsp;&nbsp;' . _MB_DON_WIDTH . "&nbsp;<input size='4' name='options[5]' type='text' value='" . $options[5] . "'>";
+    $form .= '<br>' . _MB_XDONATION_BUTTON_DIMS . ':&nbsp;';
+    $form .= _MB_XDONATION_WIDTH . "&nbsp;<input size='4' name='options[4]' type='text' value='" . $options[4] . "'>";
+    $form .= '&nbsp;&nbsp;' . _MB_XDONATION_WIDTH . "&nbsp;<input size='4' name='options[5]' type='text' value='" . $options[5] . "'>";
 
     return $form;
 }

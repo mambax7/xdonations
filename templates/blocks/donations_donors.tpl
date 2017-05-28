@@ -1,4 +1,3 @@
-<!-- 
 <table class="outer" style="width: 100%;">
     <tr class="head">
         <td style="text-align: left;"><{$block.name}></td>

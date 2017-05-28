@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -31,18 +31,18 @@
 
 //$xoopsOption['nocommon'] = 1;
 include __DIR__ . '/header.php';
-include_once 'include/functions.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once __DIR__ . '/class/utility.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$tr_config  = configInfo();
+$tr_config  = XdonationsUtility::getConfigInfo();
 $paypal_url = explode('|', $tr_config['paypal_url']);
 $paypal_url = $paypal_url[0];
 //determine the currency
 $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
 $PP_CURR_CODE = $PP_CURR_CODE[0];
-$currencySign    = defineCurrency($PP_CURR_CODE);
+$currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
 
-$pp_varlist = simple_query($xoopsDB->prefix('donations_transactions'), '', '', array('id'));
+$pp_varlist = XdonationsUtility::runSimpleQuery($xoopsDB->prefix('donations_transactions'), '', '', array('id'));
 
 define('_ERR', 1);
 define('_INF', 2);
@@ -52,17 +52,17 @@ $loglvl = $tr_config['ipn_dbg_lvl'];
 
 // creates a log file in the XOOPS uploads directory
 $lpFile = XOOPS_UPLOAD_PATH . '/xdonations_ipn.log';
-if ( false!=($lp = fopen($lpFile, 'w+'))) {
-    dprt(_MD_DON_LOGFILE_CREATED, _INF);
+if (false != ($lp = fopen($lpFile, 'wb+'))) {
+    dprt(_MD_XDONATION_LOGFILE_CREATED, _INF);
 } else {
-    dprt(_MD_DON_LOGFILE_NOT_CREATED, _ERR);
+    dprt(_MD_XDONATION_LOGFILE_NOT_CREATED, _ERR);
 }
 dprt(date('r'), _INF);
 $dbg = (isset($_GET['dbg']) && $_GET['dbg']) ? true : false;
 
 if ($dbg) {
-    dprt(_MD_DON_DEBUGACTIVE, _INF);
-    echo _MD_DON_DEBUGHEADER;
+    dprt(_MD_XDONATION_DEBUGACTIVE, _INF);
+    echo _MD_XDONATION_DEBUGHEADER;
     $pp_varlist['receiver_email'] = $tr_config['receiver_email'];
 }
 
@@ -71,19 +71,19 @@ $req = 'cmd=_notify-validate';
 
 foreach ($_POST as $key => $value) {
     $value = urlencode(stripslashes($value));
-    $req .= "&$key=$value";
+    $req   .= "&$key=$value";
 }
 
 // post back to PayPal system to validate
-dprt(_MD_DON_OPENCONN, _INF);
+dprt(_MD_XDONATION_OPENCONN, _INF);
 $fp = fsockopen($paypal_url, 80, $errno, $errstr, 30);
 
 if (!$fp) { // HTTP ERROR
     //TODO: use CURL if fsockopen fails
-    dprt("<style=\"color: #00CC00;\">" . _MD_DON_CONNFAIL . '</span>', _ERR);
-    die(sprintf(_MD_DON_POSTBACK_FAIL, $errno, $errstr));
+    dprt('<style="color: #00CC00;">' . _MD_XDONATION_CONNFAIL . '</span>', _ERR);
+    die(sprintf(_MD_XDONATION_POSTBACK_FAIL, $errno, $errstr));
 } else {
-    dprt(_MD_DON_POSTBACK_OK, _INF);
+    dprt(_MD_XDONATION_POSTBACK_OK, _INF);
     $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
     $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
     $header .= 'Content-Length: ' . strlen($req) . "\r\n\r\n";
@@ -101,16 +101,16 @@ if ('' == $pp_varlist['payment_date']) { //set blank date to proper format
 
 $writeOk = fwrite($fp, $header . $req);
 if (!$writeOk) { // HTTP ERROR
-    dprt("<style=\"font-weight: bold; color: #00CC00;\">" . _MD_DON_WRITEFAIL . '</span>', _ERR);
-    die(sprintf(_MD_DON_ERR_FAILED_WRITE, $errno, $errstr));
+    dprt('<style="font-weight: bold; color: #00CC00;">' . _MD_XDONATION_WRITEFAIL . '</span>', _ERR);
+    die(sprintf(_MD_XDONATION_ERR_FAILED_WRITE, $errno, $errstr));
 } else {
-    dprt(_MD_DON_WRITEOK, _INF);
+    dprt(_MD_XDONATION_WRITEOK, _INF);
 }
 
 // Perform PayPal email account verification
 if (!$dbg && (strcasecmp($pp_varlist['business'], $tr_config['receiver_email']) != 0)) {
-    dprt(sprintf(_MD_DON_BUSINVALID, $pp_varlist['business']), _ERR);
-    dprt(sprintf(_MD_DON_RCVINVALID, $pp_varlist['receiver_email']), _ERR);
+    dprt(sprintf(_MD_XDONATION_BUSINVALID, $pp_varlist['business']), _ERR);
+    dprt(sprintf(_MD_XDONATION_RCVINVALID, $pp_varlist['receiver_email']), _ERR);
     $ERR = 1;
 }
 
@@ -132,22 +132,25 @@ while (!$dbg && !$ERR && !feof($fp)) {
     $res = fgets($fp, 1024);
     if (strcmp($res, 'VERIFIED') == 0) {
         // Ok - PayPal has told us we have a valid IPN here
-        dprt(_MD_DON_VERIFIED, _INF);
+        dprt(_MD_XDONATION_VERIFIED, _INF);
 
         // Check for a reversal for a refund
-        if (strcmp($pp_varlist['payment_status'], 'Refunded') == 0 || strcmp($pp_varlist['txn_type'], 'Reversal') == 0) {
+        if (strcmp($pp_varlist['payment_status'], 'Refunded') == 0
+            || strcmp($pp_varlist['txn_type'], 'Reversal') == 0) {
             // Verify the reversal
-            dprt(_MD_DON_REFUND, _INF);
-            if (($parent_NumDups == 0) || strcmp($parent_row_Recordset1['payment_status'], 'Completed') || (strcmp($parent_row_Recordset1['txn_type'], 'web_accept') != 0 && strcmp($parent_row_Recordset1['txn_type'], 'send_money') != 0)) {
+            dprt(_MD_XDONATION_REFUND, _INF);
+            if (($parent_NumDups == 0) || strcmp($parent_row_Recordset1['payment_status'], 'Completed')
+                || (strcmp($parent_row_Recordset1['txn_type'], 'web_accept') != 0
+                    && strcmp($parent_row_Recordset1['txn_type'], 'send_money') != 0)) {
                 // This is an error.  A reversal implies a pre-existing completed transaction
-                dprt(_MD_DON_TRANSMISSING, _ERR);
+                dprt(_MD_XDONATION_TRANSMISSING, _ERR);
                 foreach ($_POST as $key => $val) {
                     dprt("$key => $val", _ERR);
                 }
                 break;
             }
             if (1 != $parent_NumDups) {
-                dprt(_MD_DON_MULTITXNS, _ERR);
+                dprt(_MD_XDONATION_MULTITXNS, _ERR);
                 foreach ($_POST as $key => $val) {
                     dprt("$key => $val", _ERR);
                 }
@@ -161,21 +164,21 @@ while (!$dbg && !$ERR && !feof($fp)) {
 
             // remove xoopsUsers (not anon) from group selected by Admin in config
             if (!empty($pp_varlist['custom'])) {
-                $member_handler = xoops_getHandler('member');
-                $edituser       =& $member_handler->getUser($pp_varlist['custom']);
+                $memberHandler = xoops_getHandler('member');
+                $edituser      = $memberHandler->getUser($pp_varlist['custom']);
 
                 // remove the user from the specified group
                 if ($tr_config['assign_group']) {  // admin has selected a group in admin
-                    $group_handler = xoops_getHandler('group');
-                    $validGroup    = $group_handler->get((int)$tr_config['assign_group']); // make sure this is a valid group id
+                    $groupHandler = xoops_getHandler('group');
+                    $validGroup   = $groupHandler->get((int)$tr_config['assign_group']); // make sure this is a valid group id
                     if ($validGroup) {
-                        $thisUserGroups = $member_handler->getGroupsByUser((int)$edituser->getVar('uid'));
+                        $thisUserGroups = $memberHandler->getGroupsByUser((int)$edituser->getVar('uid'));
                         if (!in_array($validGroup->getVar('groupid'), $thisUserGroups)) {
 
                             // now find out if user is in the group
-                            $isMember = $member_handler->getGroupsByUser($edituser->getVar('uid'));
+                            $isMember = $memberHandler->getGroupsByUser($edituser->getVar('uid'));
                             if ($isMember) {
-                                $success = $member_handler->removeUserFromGroup($tr_config['assign_group'], $edituser->getVar('uid'));
+                                $success = $memberHandler->removeUserFromGroup($tr_config['assign_group'], $edituser->getVar('uid'));
                                 if ($success) {
                                     dprt('User ' . $edituser->getVar('uname') . ' was removed from the ' . $validGroup->getVar('name') . ' group', _INF);
                                 } else {
@@ -186,7 +189,7 @@ while (!$dbg && !$ERR && !feof($fp)) {
                             dprt($edituser->getVar('uname') . ' was not in the ' . $validGroup->getVar('name') . ' group', _INF);
                         }
                     } else {
-                        dprt('Group isn\'t valid - change Admin configs option<br />', _ERR);
+                        dprt('Group isn\'t valid - change Admin configs option<br>', _ERR);
                     }
                 }
                 /*
@@ -198,10 +201,10 @@ while (!$dbg && !$ERR && !feof($fp)) {
             $field_values               = $field_names = '';
             for ($i = 0, $iMax = count($pp_varname); $i < $iMax; ++$i) {
                 if (0 != $i) {
-                    $field_names .= ',';
+                    $field_names  .= ',';
                     $field_values .= ',';
                 }
-                $field_names .= '`' . $pp_varname[$i] . '`';
+                $field_names  .= '`' . $pp_varname[$i] . '`';
                 $field_values .= "'" . $pp_varlist[$pp_varname[$i]] . "'";
             }
             $insertSQL = 'INSERT INTO ' . $xoopsDB->prefix('donations_transactions') . " ($field_names) VALUES ($field_values)";
@@ -213,14 +216,16 @@ while (!$dbg && !$ERR && !feof($fp)) {
 
             break;
             // Look for a normal payment
-        } elseif ((strcmp($pp_varlist['payment_status'], 'Completed') == 0) && ((strcmp($pp_varlist['txn_type'], 'web_accept') == 0) || (strcmp($pp_varlist['txn_type'], 'send_money') == 0))) {
-            dprt(_MD_DON_NORMAL_TXN, _INF);
+        } elseif ((strcmp($pp_varlist['payment_status'], 'Completed') == 0)
+                  && ((strcmp($pp_varlist['txn_type'], 'web_accept') == 0)
+                      || (strcmp($pp_varlist['txn_type'], 'send_money') == 0))) {
+            dprt(_MD_XDONATION_NORMAL_TXN, _INF);
             if ($lp) {
                 fwrite($lp, $pp_varlist['payer_email'] . ' ' . $pp_varlist['payment_status'] . ' ' . $pp_varlist['payment_date'] . "\n");
             }
 
             if ($NumDups != 0) { // Check for a duplicate txn_id
-                dprt(_MD_DON_DUPLICATETXN, _ERR);
+                dprt(_MD_XDONATION_DUPLICATETXN, _ERR);
                 foreach ($_POST as $key => $val) {
                     dprt("$key => $val", _ERR);
                 }
@@ -231,10 +236,10 @@ while (!$dbg && !$ERR && !feof($fp)) {
             $field_values               = $field_names = '';
             for ($i = 0, $iMax = count($pp_varname); $i < $iMax; ++$i) {
                 if ($i != 0) {
-                    $field_names .= ',';
+                    $field_names  .= ',';
                     $field_values .= ',';
                 }
-                $field_names .= '`' . $pp_varname[$i] . '`';
+                $field_names  .= '`' . $pp_varname[$i] . '`';
                 $field_values .= "'" . $pp_varlist[$pp_varname[$i]] . "'";
             }
             $insertSQL = 'INSERT INTO ' . $xoopsDB->prefix('donations_transactions') . " ($field_names) VALUES ($field_values)";
@@ -245,18 +250,20 @@ while (!$dbg && !$ERR && !feof($fp)) {
             dprt('SQL result = ' . $Result1, _INF);
 
             // add xoopsUsers (not anon) to group if selected by Admin in config
-            if (!empty($pp_varlist['custom']) && (($pp_varlist['option_selection1'] === 'Yes') || ($tr_config['don_forceadd'] == '1'))) {
-                $member_handler = xoops_getHandler('member');
-                $edituser       =& $member_handler->getUser($pp_varlist['custom']);
+            if (!empty($pp_varlist['custom'])
+                && (($pp_varlist['option_selection1'] === 'Yes')
+                    || ($tr_config['don_forceadd'] == '1'))) {
+                $memberHandler = xoops_getHandler('member');
+                $edituser      = $memberHandler->getUser($pp_varlist['custom']);
 
                 // add the user to specified group
                 if ($tr_config['assign_group']) {  // config option set to add users to a group
-                    $group_handler = xoops_getHandler('group');
-                    $validGroup    = $group_handler->get((int)$tr_config['assign_group']); // make sure this is a valid group id
+                    $groupHandler = xoops_getHandler('group');
+                    $validGroup   = $groupHandler->get((int)$tr_config['assign_group']); // make sure this is a valid group id
                     if ($validGroup) {
-                        $thisUserGroups = $member_handler->getGroupsByUser((int)$edituser->getVar('uid'));
+                        $thisUserGroups = $memberHandler->getGroupsByUser((int)$edituser->getVar('uid'));
                         if (!in_array($validGroup->getVar('groupid'), $thisUserGroups)) {
-                            $success = $member_handler->addUserToGroup($validGroup->getVar('groupid'), $edituser->getVar('uid'));
+                            $success = $memberHandler->addUserToGroup($validGroup->getVar('groupid'), $edituser->getVar('uid'));
                             if ($success) {
                                 dprt('User ' . $edituser->getVar('uname') . ' was added to the ' . $validGroup->getVar('name') . ' group', _INF);
                             } else {
@@ -266,7 +273,7 @@ while (!$dbg && !$ERR && !feof($fp)) {
                             dprt($edituser->getVar('uname') . ' is already in the ' . $validGroup->getVar('name') . ' group', _INF);
                         }
                     } else {
-                        dprt('Group isn\'t valid - change Admin configs option<br />', _ERR);
+                        dprt('Group isn\'t valid - change Admin configs option<br>', _ERR);
                     }
                 }
 
@@ -283,13 +290,13 @@ while (!$dbg && !$ERR && !feof($fp)) {
                     if ($rank_check > 0) {
                         // set user's new rank
                         $edituser->setVar('rank', $tr_config['assign_rank']);
-                        $member_handler->insertUser($edituser);
+                        $memberHandler->insertUser($edituser);
                     }
                 }
             }
             break;
         } else { // We're not interested in this transaction, so we're done
-            dprt(_MD_DON_NOTINTERESTED, _ERR);
+            dprt(_MD_XDONATION_NOTINTERESTED, _ERR);
             foreach ($_POST as $key => $val) {
                 dprt("$key => $val", _ERR);
             }
@@ -304,30 +311,30 @@ while (!$dbg && !$ERR && !feof($fp)) {
         }
     } elseif (strcmp($res, 'INVALID') == 0) {
         // log for manual investigation
-        dprt(_MD_DON_INVALIDIPN, _ERR);
+        dprt(_MD_XDONATION_INVALIDIPN, _ERR);
         foreach ($_POST as $key => $val) {
             dprt("$key => $val", _ERR);
         }
         break;
     } else {
-        dprt(_MD_DON_ERR_UNKNOWN_IPN_STAT, _ERR);
+        dprt(_MD_XDONATION_ERR_UNKNOWN_IPN_STAT, _ERR);
     }
 }
 
 if ($dbg) {
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('donations_transactions') . ' LIMIT 10';
-    dprt(_MD_DON_EXECUTING_QUERY, _INF);
+    dprt(_MD_XDONATION_EXECUTING_QUERY, _INF);
     $Result1 = $xoopsDB->query($sql);
     if ($Result1) {
-        dprt("<span style=\"font-weight: bold; color: #00CC00;\">" . _MD_DON_DEBUGPASS . '</span>', _INF);
+        dprt('<span style="font-weight: bold; color: #00CC00;">' . _MD_XDONATION_DEBUGPASS . '</span>', _INF);
     } else {
-        dprt("<span style=\"font-weight: bold; color: #CC0000;\">" . _MD_DON_DEBUGFAIL . '</span>', _ERR);
+        dprt('<span style="font-weight: bold; color: #CC0000;">' . _MD_XDONATION_DEBUGFAIL . '</span>', _ERR);
     }
-    dprt(sprintf(_MD_DON_RCVEMAIL, $tr_config['receiver_email']), _INF);
+    dprt(sprintf(_MD_XDONATION_RCVEMAIL, $tr_config['receiver_email']), _INF);
 }
 
 if ($log) {
-    dprt('<br />' . _MD_DON_LOGBEGIN . "<br />\n", _INF);
+    dprt('<br>' . _MD_XDONATION_LOGBEGIN . "<br>\n", _INF);
     // Insert the log entry
     $currentDate = strftime('%Y-%m-%d %H:%M:%S', time());
     $paymentDate = isset($_POST['payment_date']) ? strftime('%Y-%m-%d %H:%M:%S', strtotime($_POST['payment_date'])) : $currentDate;
@@ -342,22 +349,22 @@ if ($log) {
         $sql     = 'DELETE FROM ' . $xoopsDB->prefix('donations_translog');
         $Result1 = $xoopsDB->queryF($sql);
         if (false === $Result1) {
-            dprt(_MD_DON_ERR_TXN_NOCLEAR, _ERR);
+            dprt(_MD_XDONATION_ERR_TXN_NOCLEAR, _ERR);
         } else {
-            dprt(_MD_DON_ERR_TXN_CLEAR, _INF);
+            dprt(_MD_XDONATION_ERR_TXN_CLEAR, _INF);
         }
     }
 }
 
 fclose($fp);
 if ($lp) {
-    fwrite($lp, _MD_DON_EXITING . "\n");
+    fwrite($lp, _MD_XDONATION_EXITING . "\n");
     fclose($lp);
 }
 
 if ($dbg) {
     echo '<hr />';
-    echo _MD_DON_IFNOERROR . "<br />\n";
+    echo _MD_XDONATION_IFNOERROR . "<br>\n";
     echo "<a href='javascript:window.close();'>Close Window</a>";
 }
 
@@ -372,7 +379,7 @@ function dprt($str, $clvl)
     global $dbg, $lp, $log, $loglvl;
 
     if (isset($dbg) && $dbg) {
-        echo $str . '<br />';
+        echo $str . '<br>';
     }
 
     if (isset($loglvl) && ($clvl <= $loglvl)) {

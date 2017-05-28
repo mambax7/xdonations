@@ -56,7 +56,7 @@ CREATE TABLE `donations_config` (
 
 CREATE TABLE `donations_financial` (
   `id`     INT(11)      NOT NULL AUTO_INCREMENT,
-  `date`   DATETIME     NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date`   DATETIME     NULL     DEFAULT NULL, #'0000-00-00 00:00:00',
   `num`    VARCHAR(16)  NOT NULL DEFAULT '',
   `name`   VARCHAR(128) NOT NULL DEFAULT '',
   `descr`  VARCHAR(128) NOT NULL DEFAULT '',
@@ -125,7 +125,7 @@ CREATE TABLE `donations_transactions` (
   `payment_status`       VARCHAR(15)     NOT NULL DEFAULT '',
   `pending_reason`       VARCHAR(127)    NOT NULL DEFAULT '',
   `reason_code`          VARCHAR(127)    NOT NULL DEFAULT '',
-  `payment_date`         DATETIME        NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `payment_date`         DATETIME        NULL     DEFAULT NULL, #'0000-00-00 00:00:00',
   `txn_id`               VARCHAR(20)     NOT NULL DEFAULT '',
   `parent_txn_id`        VARCHAR(20)     NOT NULL DEFAULT '',
   `txn_type`             VARCHAR(15)     NOT NULL DEFAULT '',
@@ -171,8 +171,8 @@ CREATE TABLE `donations_transactions` (
 
 CREATE TABLE `donations_translog` (
   `id`           INT(11)  NOT NULL AUTO_INCREMENT,
-  `log_date`     DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `payment_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `log_date`     DATETIME NULL     DEFAULT NULL, #'0000-00-00 00:00:00',
+  `payment_date` DATETIME NULL     DEFAULT NULL, #'0000-00-00 00:00:00',
   `logentry`     TEXT     NOT NULL,
   PRIMARY KEY (`id`)
 )

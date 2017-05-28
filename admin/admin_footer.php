@@ -1,6 +1,5 @@
 <?php
 /**
- * xLanguage module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,10 +10,11 @@
  *
  * @copyright           XOOPS Project (http://xoops.org)
  * @license             http://www.gnu.org/licenses/gpl-2.0.html GNU Public License
- * @package             xLanguage
+ * @package             xdonations
  * @since               2.5.0
  * @author              Mamba (www.xoops.org)
  **/
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 echo "<div class='adminfooter'>\n" . "  <div style='text-align: center;'>\n" . "    <a href='http://xoops.org' rel='external'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a>\n" . "  </div>\n" . '  ' . _AM_MODULEADMIN_ADMIN_FOOTER . "\n" . '</div>';
 
 xoops_cp_footer();

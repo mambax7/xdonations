@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -28,7 +28,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  */
 /* USA                                                                  */
 /************************************************************************/
-include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
+require_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 global $xoopsConfig, $xoopsUser;
@@ -37,19 +37,19 @@ global $xoopsConfig, $xoopsUser;
 
 echo "<hr>language: {$xoopsConfig['language']}<hr>";
 
-$n = '_AD_DON_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
-$n = '_MD_DON_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
-$n = '_MI_DON_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
-$n = '_MB_DON_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
+$n = '_AD_XDONATION_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
+$n = '_MD_XDONATION_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
+$n = '_MI_XDONATION_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
+$n = '_MB_XDONATION_z_test';  if (defined($n)) {echo $n . " = " . constant($n)."<br>";} else {echo $n . " = ?<br>";}
 */
 
 xoops_loadLanguage('main', $moduleDirName);
 
 /**
- * @param XoopsObject|null $module
+ * @param  XoopsObject|null $module
  * @return bool
  */
-function xoops_module_install_xyp_base($module=null)
+function xoops_module_install_xyp_base($module = null)
 {
     global $xoopsDB, $xoopsUser;
     $moduleDirName = basename(dirname(__DIR__));
@@ -65,7 +65,7 @@ function xoops_module_install_xyp_base($module=null)
 
     $retVal = false;
     if ($xoopsUser && $xoopsDB->query($sql1) && $xoopsDB->query($sql2)) {
-            $retVal = true;
+        $retVal = true;
     }
 
     return $retVal;
@@ -80,15 +80,29 @@ function update_lg()
 
     //    $moduleDirName = basename ( dirname( __DIR__ ) ) ;
 
-    if (defined('_AD_DON_DONATIONS')) {
-        $prefixV = '_AD_DON_V_';
-        $prefixT = '_AD_DON_T_';
+    if (defined('_AD_XDONATION_DONATIONS')) {
+        $prefixV = '_AD_XDONATION_V_';
+        $prefixT = '_AD_XDONATION_T_';
     } else {
-        $prefixV = '_MI_DON_V_';
-        $prefixT = '_MI_DON_T_';
+        $prefixV = '_MI_XDONATION_V_';
+        $prefixT = '_MI_XDONATION_T_';
     }
 
-    $lstName = 'receiver_email_;paypal_url_array;use_goal_array;' . 'week_goal_1st;week_goal_2nd;week_goal_3rd;week_goal_4th;' . 'month_goal_Jan;month_goal_Feb;month_goal_Mar;month_goal_Apr;' . 'month_goal_May;month_goal_Jun;month_goal_Jul;' . 'month_goal_Aug;month_goal_Sep;month_goal_Oct;' . 'month_goal_Nov;month_goal_Dec;quarter_goal_1st;quarter_goal_2nd;' . 'quarter_goal_3rd;quarter_goal_4th;swing_day_;ty_url_;' . 'pp_itemname_;don_button_submit_;don_button_top_;pp_image_url_;' . 'pp_cancel_url_;pp_get_addr_;pp_curr_code_array;don_amount_1;' . 'don_amount_2;don_amount_3;don_amount_4;don_amount_5;' . 'don_amount_6;don_amount_7;don_amt_checked_;pp_item_num_;' . 'don_top_img_width_;don_top_img_height_;don_sub_img_width_;' . 'don_sub_img_height_;don_text_rawtext;don_name_prompt_;' . 'don_name_yes_;don_name_no_;don_forceadd_;ipn_dbg_lvl_;ipn_log_entries_;' . 'assign_group_;assign_rank_';
+    $lstName = 'receiver_email_;paypal_url_array;use_goal_array;'
+               . 'week_goal_1st;week_goal_2nd;week_goal_3rd;week_goal_4th;'
+               . 'month_goal_Jan;month_goal_Feb;month_goal_Mar;month_goal_Apr;'
+               . 'month_goal_May;month_goal_Jun;month_goal_Jul;'
+               . 'month_goal_Aug;month_goal_Sep;month_goal_Oct;'
+               . 'month_goal_Nov;month_goal_Dec;quarter_goal_1st;quarter_goal_2nd;'
+               . 'quarter_goal_3rd;quarter_goal_4th;swing_day_;ty_url_;'
+               . 'pp_itemname_;don_button_submit_;don_button_top_;pp_image_url_;'
+               . 'pp_cancel_url_;pp_get_addr_;pp_curr_code_array;don_amount_1;'
+               . 'don_amount_2;don_amount_3;don_amount_4;don_amount_5;'
+               . 'don_amount_6;don_amount_7;don_amt_checked_;pp_item_num_;'
+               . 'don_top_img_width_;don_top_img_height_;don_sub_img_width_;'
+               . 'don_sub_img_height_;don_text_rawtext;don_name_prompt_;'
+               . 'don_name_yes_;don_name_no_;don_forceadd_;ipn_dbg_lvl_;ipn_log_entries_;'
+               . 'assign_group_;assign_rank_';
 
     $table = $xoopsDB->prefix('donations_config');
     $sql0  = "INSERT INTO `{$table}` (`name`, `subtype`, `value`, `text`) " . "VALUES ('%1\$s', '%2\$s', '%3\$s', '%4\$s')";
@@ -120,7 +134,7 @@ function update_lg()
         $text  = str_replace("'", "\'", $text);
         $text  = html_entity_decode($text);
         $text  = str_replace('<br>', "\r\n", $text);
-        $text  = str_replace('<br />', "\r\n", $text);
+        $text  = str_replace('<br>', "\r\n", $text);
 
         $sql = sprintf($sql0, $name, $subType, $value, $text);
         //        echo "{$sql}<br>";
@@ -128,7 +142,7 @@ function update_lg()
     }
 }
 
-eval('function xoops_module_install_' . $moduleDirName . '(&$module=NULL)
+eval('function xoops_module_install_' . $moduleDirName . '(XoopsModule $module=NULL)
         {
         return xoops_module_install_xyp_base($module);
         }

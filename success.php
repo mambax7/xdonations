@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -30,4 +30,4 @@
 /************************************************************************/
 
 include __DIR__ . '/header.php';
-redirect_header(XOOPS_URL . '/index.php', 5, _MD_DON_THANK_YOU);
+redirect_header(XOOPS_URL . '/index.php', 5, _MD_XDONATION_THANK_YOU);

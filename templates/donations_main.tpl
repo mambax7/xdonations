@@ -1,4 +1,3 @@
-<!-- 
 <table style="width: 100%;">
     <tr style="vertical-align: top;">
         <td style="width: 73%;">
@@ -13,11 +12,11 @@
             <tr>
                 <td>
                 <form action="https://<{$PAYPAL_URL}>/cgi-bin/webscr"
-                target="paypal" method="post"> <{$SELECTAMT}><br />
+                target="paypal" method="post"> <{$SELECTAMT}><br>
                 <select name="amount">
                     <{$DONATION_AMOUNTS}>
-                </select> <br />
-                <br />
+                </select> <br>
+                <br>
                 <table>
                     <tr>
                         <td colspan="2"><{$SHOWNAME}></td>
@@ -46,8 +45,8 @@
                     type="hidden" name="cancel_return" value="<{$PP_CANCEL_URL}>"
                 /> <input type="hidden" name="return" value="<{$PP_TY_URL}>"
                 /> <input type="hidden" name="image_url" value="<{$PP_IMAGE_URL}>"
-                /><br />
-                <br />
+                /><br>
+                <br>
                 <input type="submit" value="<{$SUBMIT_BUTTON}>" border="0"
                 name="I1" /></form>
                 </td>

@@ -16,7 +16,7 @@
  * @since     ::      File available since version 1.96
  */
 
-include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
+require_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 $moduleDirName = basename(dirname(__DIR__));
 global $xoopsConfig;
 

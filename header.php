@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -29,5 +29,5 @@
 /* USA                                                                  */
 /************************************************************************/
 
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once __DIR__ . '/../../mainfile.php';
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));

@@ -1,5 +1,30 @@
-2.00 Beta 1       2016-04-05
-=====================================================================
+<h5>2.00 Beta 2       [NOT RELEASED]</h5>
+<hr>
+- removed @version (mamba)
+- PSR-2 code cosmetics (mamba)
+- addNavigation(basename(__FILE__))  (mamba)
+- dirname(__FILE__) to __DIR__ (mamba)
+- replaced < br /> with < br > (mamba)
+- Unnecessary double quotes (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- changed _handler to Handler (mamba)
+- removed '/' from void HTML elements (&lt;br&gt;, &lt;img&gt;, etc) (mamba)
+- HTML 5: removed 'selected' and 'checked' (mamba)
+- updated file headers for consistency (mamba)
+- renamed several $indexAdmin with $adminObject for consistency (mamba)
+- Updates for PayPal changes (zyspec)
+- added Contributing.md (mamba)
+- replace include with require (mamba)
+- moved functions to Utility class (mamba)
+- started conversion to XMF (mamba)
+    - updated addInfoBoxLine entries (mamba)
+    - displayNavigation(basename(__FILE__))  (mamba)
+    - changed to ->displayButton('left') (mamba)
+
+<h5>2.00 Beta 1       [2016-04-05]</h5>
+<hr>
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
 - removed @version (mamba)
@@ -7,30 +32,28 @@
 - XOOPS 2.5.8 and PHP 7 (mamba)
 - PSR-2 adjustments (mamba)
 
-
-
-1.97  RC
- =====================================================================
+<h5>1.97  RC</h5>
+ <hr>
   - updated to ModuleAdmin Class 1.1 (mamba)
   - updated table in "Treasury Register" to standard GUI, with actions on the right side (mamba)
 
-1.97  BETA
-=====================================================================
+<h5>1.97  BETA</h5>
+<hr>
 - added new Admin Menu Class (Mage, mamba)
 - updated GUI to XOOPS Standard  (mamba)
 - updated currencies accepted to match PAYPAL
 
 
-1.96  FINAL
-=====================================================================
+<h5>1.96  FINAL</h5>
+<hr>
   - updated INSTALL.TXT information
   - removed BETA.TXT file
 
-1.96  BETA 2
-=====================================================================
-  - fixed english language typo in _AD_DON_USERNAME_REQUEST_NO constant
-  - fixed 'donators' to 'donors' in _AD_DON_PP_GROUP & _AD_DON_PP_RANK
-  - added _AD_DON_T_don_forceadd_ & _AD_DON_V_don_forceadd_ constants
+<h5>1.96  BETA 2</h5>
+<hr>
+  - fixed english language typo in _AD_XDONATION_USERNAME_REQUEST_NO constant
+  - fixed 'donators' to 'donors' in _AD_XDONATION_PP_GROUP & _AD_XDONATION_PP_RANK
+  - added _AD_XDONATION_T_xdonation_forceadd_ & _AD_XDONATION_V_xdonation_forceadd_ constants
   - fixed typo on line 785 from 'sprint' to sprintf' in /admin/index.php
     causing PHP error
   - refactored code in ipnppd.php to add/remove user from special
@@ -42,8 +65,8 @@
   - added eval for install function to allow module to be relocatable
   - New file added - ./include/onupdate.php
 
-1.96  BETA 1
-=====================================================================
+<h5>1.96  BETA 1</h5>
+<hr>
   - reverted to use XOOPS common.php in XOOPS 2.4.5 instead of using a
     'custom' ./include/common.php - removed file
   - Added additional language constants to improve translation
@@ -63,8 +86,8 @@
   - Changed mysql to add table indexes to improve performance
   - Changed mysql queries in various places to reduce number of db calls
 
-- Previous versions
-=====================================================================
+<h5>- Previous versions</h5>
+<hr>
   - Added language constants to all files to allow for alternate languages
   - Added constant definitions to languages/english/main.php
   - Fixed IPN Debug mode

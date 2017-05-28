@@ -3,7 +3,7 @@
 /* Donations - Paypal financial management module for Xoops 2           */
 /* Copyright (c) 2016 XOOPS Project                                     */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060            */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */
@@ -31,35 +31,39 @@
 
 $moduleDirName = basename(__DIR__);
 
-$modversion['name']           = ucfirst($moduleDirName);
-$modversion['version']        = '2.00';
-$modversion['description']    = _MI_DON_DESC;
-$modversion['author']         = 'XOOPS Development Team, zyspec (owners@zyspec.com), Mamba';
-$modversion['credits']        = 'Based on NukeTreasury for PHP-Nuke.<br />Xoops2 port maintained by the Xoops2 Donations Module Dev Team.';
-$modversion['help']           = 'page=help';
-$modversion['license']        = 'GNU GPL 2.0';
-$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html';
-$modversion['official']       = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']          = 'assets/images/logo_module.png';
-$modversion['dirname']        = basename(__DIR__);//$xdonDir;
-$modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
-$modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
-$modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
-
-//about
+$modversion['version']             = '2.00';
+$modversion['module_status']       = 'Beta 2';
+$modversion['release_date']        = '2017/05/25';
+$modversion['name']                = _MI_XDONATION_NAME;
+$modversion['description']         = _MI_XDONATION_DESC;
+$modversion['author']              = 'XOOPS Development Team, zyspec (owners@zyspec.com), Mamba';
+$modversion['credits']             = 'Based on NukeTreasury for PHP-Nuke.<br>Xoops2 port maintained by the Xoops2 Donations Module Dev Team.';
+$modversion['help']                = 'page=help';
+$modversion['license']             = 'GNU GPL 2.0';
+$modversion['license_url']         = 'www.gnu.org/licenses/gpl-2.0.html';
+$modversion['official']            = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+$modversion['image']               = 'assets/images/logoModule.png';
+$modversion['dirname']             = basename(__DIR__);//$xdonDir;
+$modversion['modicons16']          = 'assets/images/icons/16';
+$modversion['modicons32']          = 'assets/images/icons/32';
 $modversion['release_file']        = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/docs/changelog.txt';
-$modversion['release_date']        = '2016/04/05';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['release']             = '2016-04-05';
-$modversion['module_status']       = 'Beta 1';
 $modversion['author_website_url']  = 'http://xoops.org/';
 $modversion['author_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
+$modversion['min_admin']           = '1.2';
+$modversion['min_db']              = array('mysql' => '5.5');
 
+// ------------------- Help files ------------------- //
+$modversion['helpsection'] = array(
+    ['name' => _MI_XDONATION_OVERVIEW, 'link' => 'page=help'],
+    ['name' => _MI_XDONATION_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => _MI_XDONATION_LICENSE, 'link' => 'page=license'],
+    ['name' => _MI_XDONATION_SUPPORT, 'link' => 'page=support'],
+);
 // Run Script After Installation
 $modversion['onInstall'] = 'include/installscript.php';
 
@@ -87,22 +91,22 @@ $modversion['system_menu'] = 1;
 
 // Blocks
 $modversion['blocks'][1]['file']        = 'donat_o_meter.php';
-$modversion['blocks'][1]['name']        = _MI_DON_BNAME1;
-$modversion['blocks'][1]['description'] = _MI_DON_BNAME1_DESC;
+$modversion['blocks'][1]['name']        = _MI_XDONATION_BNAME1;
+$modversion['blocks'][1]['description'] = _MI_XDONATION_BNAME1_DESC;
 $modversion['blocks'][1]['show_func']   = 'b_donations_donatometer_show';
-$modversion['blocks'][1]['options']     = '10|1|0|' . _MI_DON_BUTTON_URL . '|110|23';
+$modversion['blocks'][1]['options']     = '10|1|0|' . _MI_XDONATION_BUTTON_URL . '|110|23';
 $modversion['blocks'][1]['edit_func']   = 'b_donations_donatometer_edit';
 $modversion['blocks'][1]['template']    = 'donations_donatometer.tpl';
 
 $modversion['blocks'][2]['file']        = 'donate.php';
-$modversion['blocks'][2]['name']        = _MI_DON_BNAME2;
-$modversion['blocks'][2]['description'] = _MI_DON_BNAME2_DESC;
+$modversion['blocks'][2]['name']        = _MI_XDONATION_BNAME2;
+$modversion['blocks'][2]['description'] = _MI_XDONATION_BNAME2_DESC;
 $modversion['blocks'][2]['show_func']   = 'b_donations_donate_show';
 $modversion['blocks'][2]['template']    = 'donations_donate.tpl';
 
 $modversion['blocks'][3]['file']        = 'donors.php';
-$modversion['blocks'][3]['name']        = _MI_DON_BNAME3;
-$modversion['blocks'][3]['description'] = _MI_DON_BNAME3_DESC;
+$modversion['blocks'][3]['name']        = _MI_XDONATION_BNAME3;
+$modversion['blocks'][3]['description'] = _MI_XDONATION_BNAME3_DESC;
 $modversion['blocks'][3]['show_func']   = 'b_donations_donors_show';
 $modversion['blocks'][3]['options']     = '10|1|0';
 $modversion['blocks'][3]['edit_func']   = 'b_donations_donors_edit';
@@ -116,7 +120,7 @@ $hModConfig = xoops_getHandler('config');
 $hModule    = xoops_getHandler('module');
 
 if (is_object($xoopsUser) && $xoopsUser->isAdmin()) {
-    $modversion['sub'][1]['name'] = _MI_DON_ADMIN;
+    $modversion['sub'][1]['name'] = _MI_XDONATION_ADMIN;
     $modversion['sub'][1]['url']  = 'admin/index.php';
 }
 
