@@ -33,7 +33,7 @@ $txn_id = isset($_GET['txn_id']) ? $_GET['txn_id'] : null;
 $txn_id = isset($_POST['txn_id']) ? $_POST['txn_id'] : $txn_id;
 
 // display search box
-$searchForm = new XoopsThemeForm(_AD_XDONATION_SEARCH_FORM, 'searchform', $_SERVER['PHP_SELF'], 'POST');
+$searchForm = new XoopsThemeForm(_AD_XDONATION_SEARCH_FORM, 'searchform', $_SERVER['PHP_SELF'], 'post', true);
 $searchForm->addElement(new XoopsFormText(_AD_XDONATION_SEARCH_TERM, 'txn_id', 20, 20));
 $buttonTray = new XoopsFormElementTray('');
 $sButton    = new XoopsFormButton('', 'search', _SEARCH, 'submit');
@@ -55,7 +55,7 @@ if (isset($txn_id) && ($txn_id != 0)) {
 
     $txnRecord     = $xoopsDB->query($sql);
     $row_txnRecord = $xoopsDB->fetchArray($txnRecord); //get the transaction
-    $txnForm       = new XoopsThemeForm(_AD_XDONATION_TXN_FORM, 'txnform', $_SERVER['PHP_SELF'], 'POST');
+    $txnForm       = new XoopsThemeForm(_AD_XDONATION_TXN_FORM, 'txnform', $_SERVER['PHP_SELF'], 'post', true);
     $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_TXN_ID, $row_txnRecord['txn_id']));
     $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $row_txnRecord['payment_date']));
     $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_PMNT_TYPE, $row_txnRecord['payment_type']));
@@ -103,7 +103,7 @@ if (isset($txn_id) && ($txn_id != 0)) {
      var_dump($txnRecordArray);
      exit();
      */
-    $allForm = new XoopsThemeForm(_AD_XDONATION_TXN_RECENT_FORM, 'txnform', $_SERVER['PHP_SELF'], 'POST');
+    $allForm = new XoopsThemeForm(_AD_XDONATION_TXN_RECENT_FORM, 'txnform', $_SERVER['PHP_SELF'], 'post', true);
     while (false !== ($txnRecord = $xoopsDB->fetchArray($txnRecords))) {
         //    foreach ($txnRecordArray as $txnRecord) {
         $thisTray  = 'txnTray_' . $txnRecord['id'];

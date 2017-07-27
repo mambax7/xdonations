@@ -855,7 +855,7 @@ function showLog()
     $query_Recordset1 = 'SELECT id, log_date, payment_date, logentry FROM ' . $xoopsDB->prefix('donations_translog') . ' ORDER BY log_date DESC';
     $transRecords     = $xoopsDB->query($query_Recordset1);
     $numRows          = $xoopsDB->getRowsNum($transRecords);
-    $logForm          = new XoopsThemeForm(_AD_XDONATION_SHOW_LOG, 'logform', $_SERVER['PHP_SELF'], 'POST');
+    $logForm          = new XoopsThemeForm(_AD_XDONATION_SHOW_LOG, 'logform', $_SERVER['PHP_SELF'], 'post', true);
 
     if ($numRows) {
         while (false !== (list($rId, $rLdate, $rPdate, $rLentry) = $xoopsDB->fetchRow($transRecords))) {
