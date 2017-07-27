@@ -324,7 +324,7 @@ define('_AD_XDONATION_ACTION', 'Actions');
 define('_AM_XDONATIONS_MODULEADMIN_MISSING', 'Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class (see /docs/readme.txt)');
 
 // Text for Admin footer
-//define("_AM_XDONATION_FOOTER", "<div class='center smallsmall italic pad5'>xDonations is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+//define("_AM_XDONATION_FOOTER", "<div class='center smallsmall italic pad5'>xDonations is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
 define('_AM_XDONATION_UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
 define('_AM_XDONATION_UPGRADEFAILED1', "Update failed - couldn't add new fields");
