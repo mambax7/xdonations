@@ -32,7 +32,7 @@ define('_MD_XDONATION_CURR_TWD', 'NT$');
 define('_MD_XDONATION_CURR_USD', '$');
 define('_MD_XDONATION_DEBUGACTIVE', 'Debug mode activated');
 define('_MD_XDONATION_DEBUGFAIL', 'FAILED !');
-define('_MD_XDONATION_DEBUGHEADER', 'Xoops Donations Module' . '<br>' . 'PayPal Instant Payment Notification script' . '<br>' . 'See below for status:<hr />');
+define('_MD_XDONATION_DEBUGHEADER', 'Xoops Donations Module' . '<br>' . 'PayPal Instant Payment Notification script' . '<br>' . 'See below for status:<hr>');
 
 define('_MD_XDONATION_DEBUGPASS', 'PASSED !');
 define('_MD_XDONATION_DONATIONS', 'Donations');

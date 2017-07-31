@@ -197,7 +197,7 @@ define('_MI_XDONATION_ADMIN_ABOUT', 'About');
 
 //Help
 define('_MI_XDONATION_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_XDONATION_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_XDONATION_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_XDONATION_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_XDONATION_OVERVIEW', 'Overview');
 
