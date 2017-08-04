@@ -156,25 +156,25 @@ function xdshorten($var, $len = 10)
  */
 function b_donations_donors_edit($options)
 {
-    $form = _MB_XDONATION_NUM_DONORS . ":&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "'  size='4'/>";
+    $form = _MB_XDONATION_NUM_DONORS . ":&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "'  size='4'>";
     $form .= '<br>' . _MB_XDONATION_REVEAL_DATES . ":&nbsp;<select size='1' name='options[1]'><option value='1'";
     if ($options[1] == 1) {
         $form .= ' selected';
     }
-    $form .= ' />' . _YES . "</option><option value='0'";
+    $form .= '>' . _YES . "</option><option value='0'";
     if ($options[1] == 0) {
         $form .= ' selected';
     }
-    $form .= ' />' . _NO . '</option></select>';
+    $form .= '>' . _NO . '</option></select>';
     $form .= '<br>' . _MB_XDONATION_REVEAL_AMOUNTS . ":&nbsp;<select size='1' name='options[2]'><option value='1'";
     if ($options[2] == 1) {
         $form .= ' selected';
     }
-    $form .= ' />' . _YES . "</option><option value='0'";
+    $form .= '>' . _YES . "</option><option value='0'";
     if ($options[2] == 0) {
         $form .= ' selected';
     }
-    $form .= ' />' . _NO . '</option></select>';
+    $form .= '>' . _NO . '</option></select>';
 
     return $form;
 }

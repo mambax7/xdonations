@@ -2,7 +2,7 @@
 /* xDonations - Paypal financial management module for Xoops 2          */
 /* Copyright (c) 2004 by Xoops2 Donations Module Dev Team       */
 /* http://dev.xoops.org/modules/xfmod/project/?group_id=1060        */
-/* 
+/*
 /************************************************************************/
 /*                                                                      */
 /* Based on NukeTreasury for PHP-Nuke - by Dave Lawrence AKA Thrash     */

@@ -120,44 +120,44 @@ function treasury()
     echo "</td></tr>\n";
     echo "<tr><td style=\"width: 100%; text-align: center;\">\n";
     echo "  <form action=\"donations.php?op=IpnRec#AdminTop\" method=\"post\">\n";
-    echo "    <input type=\"hidden\" name=\"op\" value=\"IpnRec\" />\n" . '    <input type="submit" value="' . _AD_XDONATION_SYNCHRONISE_IPN . "\" onClick=\"return confirm('" . _AD_XDONATION_CONFIRM_TOTAL_UP . "')\" />\n" . "  </form>\n";
+    echo "    <input type=\"hidden\" name=\"op\" value=\"IpnRec\">\n" . '    <input type="submit" value="' . _AD_XDONATION_SYNCHRONISE_IPN . "\" onClick=\"return confirm('" . _AD_XDONATION_CONFIRM_TOTAL_UP . "')\">\n" . "  </form>\n";
     echo "</td></tr></table>\n";
 
     if ($pageNum_Recordset1 > 0) {
         echo "<table style=\"border-width: 0px; text-align: center;\">\n" . "  <tr>\n";
         echo "    <td><form action=\"donations.php#AdminTop\" method=\"post\">\n"
-             . "<input type=\"hidden\" name=\"op\" value=\"Treasury\" />\n"
-             . "<input type=\"hidden\" name=\"pageNum_Recordset1\" value=\"0\" />\n"
-             . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\" />\n"
+             . "<input type=\"hidden\" name=\"op\" value=\"Treasury\">\n"
+             . "<input type=\"hidden\" name=\"pageNum_Recordset1\" value=\"0\">\n"
+             . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\">\n"
              . '<input type="submit" name="navig" value="|&lt;" title="'
              . _AD_XDONATION_CURRENT
-             . "\" /></form></td>\n";
+             . "\"></form></td>\n";
         echo "<td><form action=\"donations.php#AdminTop\" method=\"post\">\n"
-             . "<input type=\"hidden\" name=\"op\" value=\"Treasury\" />\n"
+             . "<input type=\"hidden\" name=\"op\" value=\"Treasury\">\n"
              . '<input type="hidden" name="pageNum_Recordset1" value="'
              . max(0, $pageNum_Recordset1 - 1)
-             . "\" />\n"
-             . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\" />\n"
+             . "\">\n"
+             . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\">\n"
              . '<input type="submit" name="navig" value="&lt;" title="'
              . _AD_XDONATION_NEXT_NEWEST
-             . "\" /></form></td>\n";
+             . "\"></form></td>\n";
         if ($pageNum_Recordset1 < $totalPages_Recordset1) {
             echo "<td><form action=\"donations.php#AdminTop\" method=\"post\">\n"
-                 . "<input type=\"hidden\" name=\"op\" value=\"Treasury\" />\n"
+                 . "<input type=\"hidden\" name=\"op\" value=\"Treasury\">\n"
                  . '<input type="hidden" name="pageNum_Recordset1" value="'
                  . min($totalPages_Recordset1, $pageNum_Recordset1 + 1)
-                 . "\" />\n"
-                 . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\" />\n"
+                 . "\">\n"
+                 . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\">\n"
                  . '<input type="submit" name="navig" value="&gt;" title="'
                  . _AD_XDONATION_NEXT_OLDEST
-                 . "\" /></form></td>\n";
+                 . "\"></form></td>\n";
             echo "<td><form action=\"donations.php#AdminTop\" method=\"post\">\n"
-                 . "<input type=\"hidden\" name=\"op\" value=\"Treasury\" />\n"
-                 . "<input type=\"hidden\" name=\"pageNum_Recordset1\" value=\"{$totalPages_Recordset1}\" />\n"
-                 . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\" />\n"
+                 . "<input type=\"hidden\" name=\"op\" value=\"Treasury\">\n"
+                 . "<input type=\"hidden\" name=\"pageNum_Recordset1\" value=\"{$totalPages_Recordset1}\">\n"
+                 . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\">\n"
                  . '<input type="submit" name="navig" value="&gt;|" title="'
                  . _AD_XDONATION_OLDEST
-                 . "\" /></form></td>\n";
+                 . "\"></form></td>\n";
         }
         echo "</tr></table>\n";
     }
@@ -211,7 +211,7 @@ function treasury()
                            . _EDIT
                            . "' title='"
                            . _EDIT
-                           . "' /></a>&nbsp;"
+                           . "'></a>&nbsp;"
                            . "<a href=\"donations.php?op=FinRegDel&id=$row_Recordset1[id]\">"
                            . '<img style="border-width: 0px; width: 16px; height: 16px;" src='
                            . $pathIcon16
@@ -225,7 +225,7 @@ function treasury()
                            . '\n\n'
                            . _AD_XDONATION_CONFIRM_ACTION
                            . "')\""
-                           . ' /></a>'
+                           . '></a>'
                            . "</td>\n";
             echo $jscriptCmd;
         }
@@ -255,14 +255,14 @@ function treasury()
          . "<tr>\n"
          . "<td style=\"text-align: center;\">\n"
          . "<form action=\"donations.php\" method=\"post\" name=\"recedit\">\n"
-         . "<input name=\"id\" type=\"hidden\" />\n";
+         . "<input name=\"id\" type=\"hidden\">\n";
     $newDate  = new XoopsFormTextDateSelect('Date', 'StartDate', $size = 15, null);
     $showDate = $newDate->render();
     echo $showDate . "</td>\n";
-    echo "<td style=\"text-align: center; width: 8px;\"><input name=\"Num\" type=\"text\" size=\"8\" /></td>\n"
-         . "<td style=\"text-align: center;\"><input name=\"Name\" type=\"text\" /></td>\n"
-         . "<td style=\"text-align: center;\"><input name=\"Descr\" type=\"text\" /></td>\n"
-         . "<td style=\"text-align: right;\"><input name=\"Amount\" type=\"text\" size=\"8\" /></td>\n";
+    echo "<td style=\"text-align: center; width: 8px;\"><input name=\"Num\" type=\"text\" size=\"8\"></td>\n"
+         . "<td style=\"text-align: center;\"><input name=\"Name\" type=\"text\"></td>\n"
+         . "<td style=\"text-align: center;\"><input name=\"Descr\" type=\"text\"></td>\n"
+         . "<td style=\"text-align: right;\"><input name=\"Amount\" type=\"text\" size=\"8\"></td>\n";
     echo "</tr>\n";
     echo "<tr><td style=\"text-align: right;\" colspan=\"5\">\n"
          . '<input name="" type="reset" value="'
@@ -272,10 +272,10 @@ function treasury()
          . _ADD
          . "'; "
          . "document.recedit.op.value = 'FinRegAdd'; "
-         . "return true;\" />&nbsp;\n"
-         . '<input type="hidden" name="op" value="FinRegAdd" /><input name="Submit" type="submit" value="'
+         . "return true;\">&nbsp;\n"
+         . '<input type="hidden" name="op" value="FinRegAdd"><input name="Submit" type="submit" value="'
          . _AD_XDONATION_ADD
-         . "\" />\n"
+         . "\">\n"
          . "</form>\n";
     echo "</td></tr>\n";
     echo "</table>\n";
@@ -490,7 +490,7 @@ function setConfig()
     </script>
     <?php
     //-------------------------------------------------------------------------------
-    echo "<form name=\"tr_configs\" action=\"donations.php\" method=\"post\">\n" . "<input type=\"hidden\" name=\"op\" value=\"updateConfig\" />\n";
+    echo "<form name=\"tr_configs\" action=\"donations.php\" method=\"post\">\n" . "<input type=\"hidden\" name=\"op\" value=\"updateConfig\">\n";
     echo "<table style=\"border-width: 1px; width: 90%; text-align: center;\"><tr>\n";
     echo "<td style=\"text-align: center; font-weight: bold;\" class=\"title\">\n";
     echo '<h3>' . _AD_XDONATION_CONFIG_MODULE . "</h3>\n";
@@ -540,7 +540,7 @@ function setConfig()
                  . _AD_XDONATION_SUGGESTED_AMOUNT
                  . " #{$row_Recordset1['subtype']}',1,'"
                  . _AD_XDONATION_ALERTE_INPUT_NUMBER
-                 . "');\" /></td>\n";
+                 . "');\"></td>\n";
     } while (false !== ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1)));
 
     $row1 .= "</tr>\n";
@@ -561,7 +561,7 @@ function setConfig()
     echo "</table>\n";
 
     echo "</td></tr>\n";
-    echo '<tr><td style="text-align: center; width: 100%;"><br><input type="submit" value="' . _AD_XDONATION_SUBMIT . '" /></td></tr>';
+    echo '<tr><td style="text-align: center; width: 100%;"><br><input type="submit" value="' . _AD_XDONATION_SUBMIT . '"></td></tr>';
     echo "</table><br><br>\n";
     $adminObject->displayNavigation('donations.php?op=Config');
     echo "<table style=\"border-width: 1px; width: 90%; text-align: center;\"><tr>\n";
@@ -649,7 +649,7 @@ function setConfig()
          . "</tr>\n";
     echo "</table><br>\n";
     echo "</td></tr>\n";
-    echo '<tr><td style="text-align: center; width: 100%;"><input type="submit" value="' . _AD_XDONATION_SUBMIT . "\" />\n";
+    echo '<tr><td style="text-align: center; width: 100%;"><input type="submit" value="' . _AD_XDONATION_SUBMIT . "\">\n";
     echo '</td></tr></table><br><br>';
 
     //Goal Preferences
@@ -683,7 +683,7 @@ function setConfig()
                  . _AD_XDONATION_GOAL_DONATION
                  . "',1,'"
                  . _AD_XDONATION_ALERTE_INPUT_NUMBER
-                 . "');\" /></td>\n";
+                 . "');\"></td>\n";
     } while (false !== ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1)));
     $row1 .= "  </tr>\n";
     $row2 .= "  </tr>\n";
@@ -709,7 +709,7 @@ function setConfig()
                   . _AD_XDONATION_GOAL_DONATION
                   . "',1,'"
                   . _AD_XDONATION_ALERTE_INPUT_NUMBER
-                  . "');\" /></td>\n";
+                  . "');\"></td>\n";
     } while (false !== ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1)));
     $row1 .= "  </tr>\n";
     $row2 .= "  </tr>\n";
@@ -738,7 +738,7 @@ function setConfig()
                  . _AD_XDONATION_GOAL_DONATION
                  . "',1,'"
                  . _AD_XDONATION_ALERTE_INPUT_NUMBER
-                 . "');\" /></td>\n";
+                 . "');\"></td>\n";
     } while (false !== ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1)));
     $row1 .= "  </tr>\n";
     $row2 .= "  </tr>\n";
@@ -837,7 +837,7 @@ function reconcileIpn()
     }
 
     echo '<br><br><form action="donations.php?op=Treasury#AdminTop" method="post">';
-    echo '<input type="hidden" name="op" value="Treasury" />' . '<input type="submit" value="' . _AD_XDONATION_RETURN . '" />' . '</form>';
+    echo '<input type="hidden" name="op" value="Treasury">' . '<input type="submit" value="' . _AD_XDONATION_RETURN . '">' . '</form>';
 }
 
 /**
@@ -914,7 +914,7 @@ function clearLog($ok = 0)
         $retMsg  = $success ? _AD_XDONATION_LOG_CLEARED : _AD_XDONATION_LOG_NOT_CLEARED;
         echo '<form name="ipnlog" action="donations.php" method="get">';
         echo "<table style=\"text-align: center; border-width: 0px; margin: 4px;\"><tr><td>{$retMsg}</td></tr>";
-        echo '<tr><td><input type="submit" value="' . _AD_XDONATION_CONTINUE . '" /></td></tr></table>';
+        echo '<tr><td><input type="submit" value="' . _AD_XDONATION_CONTINUE . '"></td></tr></table>';
         echo '</form>';
         //        redirect_header('./index.php', 2, $retMsg);
         //

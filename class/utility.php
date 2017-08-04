@@ -22,7 +22,7 @@ class XdonationsUtility extends XoopsObject
         //            }
         //        }
         //        catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         //        }
         try {
             if (!file_exists($folder)) {
@@ -31,9 +31,8 @@ class XdonationsUtility extends XoopsObject
                 }
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        }
-        catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
 
@@ -52,7 +51,7 @@ class XdonationsUtility extends XoopsObject
         //                return copy($file, $folder);
         //            }
         //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br/>";
+        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
         //        }
         //        return false;
     }
@@ -83,17 +82,24 @@ class XdonationsUtility extends XoopsObject
      * @static
      * @param XoopsModule $module
      *
+     * @param null|string $requiredVer
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerXoops(XoopsModule $module)
+    public static function checkVerXoops(XoopsModule $module = null, $requiredVer = null)
     {
-        xoops_loadLanguage('admin', $module->dirname());
+        $moduleDirName = basename(dirname(__DIR__));
+        if (null === $module) {
+            $module = XoopsModule::getByDirname($moduleDirName);
+        }
+        xoops_loadLanguage('admin', $moduleDirName);
         //check for minimum XOOPS version
-        $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray   = explode('.', $currentVer);
-        $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        $reqArray    = explode('.', $requiredVer);
-        $success     = true;
+        $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
+        $currArray  = explode('.', $currentVer);
+        if (null === $requiredVer) {
+            $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
+        }
+        $reqArray = explode('.', $requiredVer);
+        $success  = true;
         foreach ($reqArray as $k => $v) {
             if (isset($currArray[$k])) {
                 if ($currArray[$k] > $v) {
@@ -105,7 +111,7 @@ class XdonationsUtility extends XoopsObject
                     break;
                 }
             } else {
-                if ((int)$v > 0) { // handles things like x.x.x.0_RC2
+                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
                     $success = false;
                     break;
                 }
@@ -389,7 +395,7 @@ class XdonationsUtility extends XoopsObject
             echo "<tr>\n"
                  . "  <td title=\"{$text}\" style=\"text-align: right; width: {$tdWidth};\">{$desc}</td>\n"
                  . "  <td title=\"{$text}\" style=\"text-align: left;\">\n"
-                 . "    <input size=\"{$inpSize}\" name=\"var_{$name}\" type=\"text\" value=\"{$cfg['value']}\"  {$extra} />\n"
+                 . "    <input size=\"{$inpSize}\" name=\"var_{$name}\" type=\"text\" value=\"{$cfg['value']}\"  {$extra}>\n"
                  . "  </td>\n"
                  . "</tr>\n";
         }
@@ -416,13 +422,13 @@ class XdonationsUtility extends XoopsObject
 
             $text = htmlentities($cfg['text']);
             echo "<tr>\n" . "  <td title=\"{$text}\" style=\"text-align: right;\">{$desc}</td>\n" . "  <td title=\"{$text}\" style=\"text-align: left;\">\n";
-            echo '    &nbsp;' . _AD_XDONATION_WIDTH . "&nbsp;\n" . "    <input size=\"{$inpSize}\" name=\"var_{$cfg['name']}\" type=\"text\" value=\"{$cfg['value']}\" {$extra} />\n";
+            echo '    &nbsp;' . _AD_XDONATION_WIDTH . "&nbsp;\n" . "    <input size=\"{$inpSize}\" name=\"var_{$cfg['name']}\" type=\"text\" value=\"{$cfg['value']}\" {$extra}>\n";
 
             $query_cfg = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . " WHERE name = '$ynm'";
             $cfgset    = $xoopsDB->query($query_cfg);
             if ($cfgset) {
                 $cfg = $xoopsDB->fetchArray($cfgset);
-                echo '    &nbsp;&nbsp;' . _AD_XDONATION_HEIGHT . "&nbsp;\n" . "    <input size=\"{$inpSize}\" name=\"var_{$cfg['name']}\" type=\"text\" value=\"{$cfg['value']}\" {$extra} />\n";
+                echo '    &nbsp;&nbsp;' . _AD_XDONATION_HEIGHT . "&nbsp;\n" . "    <input size=\"{$inpSize}\" name=\"var_{$cfg['name']}\" type=\"text\" value=\"{$cfg['value']}\" {$extra}>\n";
             }
             echo "  </td>\n" . "</tr>\n";
         }
@@ -585,13 +591,12 @@ class XdonationsUtility extends XoopsObject
         echo "<div style=\"text-align: center;\">\n";
         echo "<table style='text-align: center; border-width: 1px; padding: 2px; margin: 2px; width: 90%;'>\n";
         echo "  <tr>\n";
-        echo "    <td style='text-align: center; width: 25%;'><a href='index.php?op=Treasury'><img src='../images/admin/business_sm.png' alt='" . _AD_XDONATION_TREASURY . "' />&nbsp;" . _AD_XDONATION_TREASURY . "</a></td>\n";
-        echo "    <td style='text-align: center; width: 25%;'><a href='index.php?op=ShowLog'><img src='../images/admin/view_text_sm.png' alt='" . _AD_XDONATION_SHOW_LOG . "' />&nbsp;" . _AD_XDONATION_SHOW_LOG . "</a></td>\n";
-        echo "    <td style='text-align: center; width: 25%;'><a href='transaction.php'><img src='../images/admin/view_detailed_sm.png' alt='" . _AD_XDONATION_SHOW_TXN . "' />&nbsp;" . _AD_XDONATION_SHOW_TXN . "</a></td>\n";
-        echo "    <td style='text-align: center; width: 25%;'><a href='index.php?op=Config'><img src='../images/admin/configure_sm.png' alt='" . _AD_XDONATION_CONFIGURATION . "' />&nbsp;" . _AD_XDONATION_CONFIGURATION . "</a></td>\n";
+        echo "    <td style='text-align: center; width: 25%;'><a href='index.php?op=Treasury'><img src='../images/admin/business_sm.png' alt='" . _AD_XDONATION_TREASURY . "'>&nbsp;" . _AD_XDONATION_TREASURY . "</a></td>\n";
+        echo "    <td style='text-align: center; width: 25%;'><a href='index.php?op=ShowLog'><img src='../images/admin/view_text_sm.png' alt='" . _AD_XDONATION_SHOW_LOG . "'>&nbsp;" . _AD_XDONATION_SHOW_LOG . "</a></td>\n";
+        echo "    <td style='text-align: center; width: 25%;'><a href='transaction.php'><img src='../images/admin/view_detailed_sm.png' alt='" . _AD_XDONATION_SHOW_TXN . "'>&nbsp;" . _AD_XDONATION_SHOW_TXN . "</a></td>\n";
+        echo "    <td style='text-align: center; width: 25%;'><a href='index.php?op=Config'><img src='../images/admin/configure_sm.png' alt='" . _AD_XDONATION_CONFIGURATION . "'>&nbsp;" . _AD_XDONATION_CONFIGURATION . "</a></td>\n";
         echo "  </tr>\n";
         echo "</table>\n";
         echo "<br></div>\n";
     }
-
 }

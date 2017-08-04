@@ -363,7 +363,7 @@ if ($lp) {
 }
 
 if ($dbg) {
-    echo '<hr />';
+    echo '<hr>';
     echo _MD_XDONATION_IFNOERROR . "<br>\n";
     echo "<a href='javascript:window.close();'>Close Window</a>";
 }

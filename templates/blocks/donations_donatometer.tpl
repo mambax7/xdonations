@@ -4,7 +4,7 @@
         <td style="width: 100%; text-align: center;" colspan="2"><a
             href="<{$block.DON_URL}>"> <img src="<{$block.DM_BUTTON}>"
         style="border-width; 0px; text-align: center;"
-        alt="<{$block.DM_MAKEDON}>" <{$block.DM_BUTT_DIMS}> /> </a></td>
+        alt="<{$block.DM_MAKEDON}>" <{$block.DM_BUTT_DIMS}>> </a></td>
     </tr>
     <tr>
         <td
@@ -37,7 +37,7 @@
     style="border-width: 0; padding: 0; margin: 0; width: 100%;">
     <tr>
         <td style="width: 100%;">
-        <hr />
+        <hr>
         </td>
     </tr>
     <tr>

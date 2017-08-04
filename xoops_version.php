@@ -53,7 +53,7 @@ $modversion['release']             = '2016-04-05';
 $modversion['author_website_url']  = 'https://xoops.org/';
 $modversion['author_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
+$modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = array('mysql' => '5.5');
 
