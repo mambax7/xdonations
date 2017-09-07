@@ -42,7 +42,7 @@ $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EU
 $PP_CURR_CODE = $PP_CURR_CODE[0];
 $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
 
-$pp_varlist = XdonationsUtility::runSimpleQuery($xoopsDB->prefix('donations_transactions'), '', '', array('id'));
+$pp_varlist = XdonationsUtility::runSimpleQuery($xoopsDB->prefix('donations_transactions'), '', '', ['id']);
 
 define('_ERR', 1);
 define('_INF', 2);

@@ -118,7 +118,7 @@ class XdonationsUtility extends XoopsObject
             }
         }
 
-        if (!$success) {
+        if (false === $success) {
             $module->setErrors(sprintf(_AM_XDONATION_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
         }
 
@@ -192,7 +192,7 @@ class XdonationsUtility extends XoopsObject
 
         $query_cfg = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . " WHERE subtype = '' OR subtype = 'array'";
         $cfgset    = $xoopsDB->query($query_cfg);
-        $tr_config = array();
+        $tr_config = [];
         while ($cfgset && $row = $xoopsDB->fetchArray($cfgset)) {
             $tr_config[$row['name']] = $row['value'];
         }
@@ -231,7 +231,7 @@ class XdonationsUtility extends XoopsObject
      * @param  array  $ignore     (optional) list of values to ignore (clear)
      * @return mixed  FALSE - nothing found, SUCCESS - array() of values
      */
-    public static function runSimpleQuery($table_name, $key_col = '', $key_val = '', $ignore = array())
+    public static function runSimpleQuery($table_name, $key_col = '', $key_val = '', $ignore = [])
     {
         global $xoopsDB;
         // open the db
@@ -246,7 +246,7 @@ class XdonationsUtility extends XoopsObject
         $num_fields = $xoopsDB->getFieldsNum($db_rs);
         if ($num_fields) {
             // first (and only) row
-            $simple_q = array();
+            $simple_q = [];
             $row      = $xoopsDB->fetchArray($db_rs);
             // load up array
             if ($key_col != '' && $key_val != '') {
@@ -531,7 +531,7 @@ class XdonationsUtility extends XoopsObject
         $sql      = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . ' ORDER BY name, subtype';
         $sqlQuery = $xoopsDB->query($sql);
 
-        $t = array();
+        $t = [];
         while (false !== ($sqlfetch = $xoopsDB->fetchArray($sqlQuery))) {
             $text = html_entity_decode($sqlfetch['text']);
             $text = str_replace('<br>', "\r\n", $text);

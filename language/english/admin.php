@@ -20,8 +20,10 @@ define('_AD_XDONATION_CONFIG_MODULE', 'Donations Module Config');
 define('_AD_XDONATION_CONFIGURATION', 'Config');
 define('_AD_XDONATION_CONFIRM_ACTION', 'Are you sure you want to do this now?');
 define('_AD_XDONATION_CONFIRM_DELETE', 'Are you sure you want to delete this record?');
-define('_AD_XDONATION_CONFIRM_IMG_URL',
-       'This URL does not begin with https://' . '<br>' . 'This image should reside on an HTTPS server.' . '<br>' . 'If you use this URL, users will receive a warning' . '<br>' . 'about viewing secure and non-secure data on the same page.' . '<br>' . ' Are you sure you want to continue?');
+define(
+    '_AD_XDONATION_CONFIRM_IMG_URL',
+       'This URL does not begin with https://' . '<br>' . 'This image should reside on an HTTPS server.' . '<br>' . 'If you use this URL, users will receive a warning' . '<br>' . 'about viewing secure and non-secure data on the same page.' . '<br>' . ' Are you sure you want to continue?'
+);
 
 define('_AD_XDONATION_CONFIRM_TOTAL_UP', 'This action will total up all recent PayPal IPN ' . 'transactions and post them here in the register. ' . 'Are you sure you want to do this now ?');
 
@@ -35,11 +37,15 @@ define('_AD_XDONATION_DESCRIPTION', 'Description');
 define('_AD_XDONATION_DONATIONS', 'Donations');
 define('_AD_XDONATION_ERR_BAD_DATE_FORMAT', 'Invalid Date format');
 define('_AD_XDONATION_ERR_BAD_NAME_FORMAT', 'The Name field cannot be blank');
-define('_AD_XDONATION_ERR_DB_INSERTION',
-       '<span style="font-weight: bold; color: red;"> ERROR:</span> ' . 'There are %d to import, but there was an<br>' . 'error encoutered during db record insertion into Financial ' . 'table.<br>Insertion <span style="font-weight: bold; color: red;">FAILED</span>');
+define(
+    '_AD_XDONATION_ERR_DB_INSERTION',
+       '<span style="font-weight: bold; color: red;"> ERROR:</span> ' . 'There are %d to import, but there was an<br>' . 'error encoutered during db record insertion into Financial ' . 'table.<br>Insertion <span style="font-weight: bold; color: red;">FAILED</span>'
+);
 define('_AD_XDONATION_ERR_INVALID_RECORD_ID', 'Invalid record id specified, operation aborted');
-define('_AD_XDONATION_ERR_SQL_FAILURE',
-       '<span style="color: #0000FF;"><span style="font-weight: bold;">If you see this screen ' . 'then an SQL error was encountered</span><br>' . 'You should see a message in <span style="color: #FF0000;">RED</span> below indicating ' . 'the error condition</span>');
+define(
+    '_AD_XDONATION_ERR_SQL_FAILURE',
+       '<span style="color: #0000FF;"><span style="font-weight: bold;">If you see this screen ' . 'then an SQL error was encountered</span><br>' . 'You should see a message in <span style="color: #FF0000;">RED</span> below indicating ' . 'the error condition</span>'
+);
 define('_AD_XDONATION_FIELD_PASSED', 'Field passed validation !');
 define('_AD_XDONATION_GOAL', 'Goal');
 define('_AD_XDONATION_GOAL_DONATION', 'Goal donation');
@@ -128,8 +134,10 @@ define('_AD_XDONATION_T_xdonation_name_yes_', 'Enter the text for a &quot;YES&qu
 define('_AD_XDONATION_T_xdonation_sub_img_height_', '');
 define('_AD_XDONATION_T_xdonation_sub_img_width_', 'Restrict the dimensions for the above image.' . '<br>' . 'To use the image&apos;s native size leave both boxes blank.');
 
-define('_AD_XDONATION_T_xdonation_text_rawtext',
-       'We are a non-profit organization completely supported by you, the members.  Many organizations have web sites, servers and Internet bandwidth donated by it\'s members.  We pride ourselves on being run and owned as a community, and not by a few power-hungry members.  This means that we need you to be a part of that community.  We encourage every member to contribute to the community in any way that they can.  Since we do not have our servers or bandwidth donated, we have to pay our bills every month to keep things going.  For those of you who can, we ask that you make a monetary contribution in whatever denomination you\'d like.  Every little bit counts.');
+define(
+    '_AD_XDONATION_T_xdonation_text_rawtext',
+       'We are a non-profit organization completely supported by you, the members.  Many organizations have web sites, servers and Internet bandwidth donated by it\'s members.  We pride ourselves on being run and owned as a community, and not by a few power-hungry members.  This means that we need you to be a part of that community.  We encourage every member to contribute to the community in any way that they can.  Since we do not have our servers or bandwidth donated, we have to pay our bills every month to keep things going.  For those of you who can, we ask that you make a monetary contribution in whatever denomination you\'d like.  Every little bit counts.'
+);
 define('_AD_XDONATION_T_xdonation_top_img_height_', '');
 define('_AD_XDONATION_T_xdonation_top_img_width_', 'Restrict the dimensions for the above image.  To use the image&apos;s native size\r\nleave both boxes blank.');
 define('_AD_XDONATION_T_ipn_dbg_lvl_', 'There is an IPN logging feature which has' . '<br>' . 'three log levels:' . '<br>' . '1) OFF' . '<br>' . '2) Log only Errors' . '<br>' . '3) Log everything' . '<br>' . 'This log is stored in the &quot;translog&quot; table.');

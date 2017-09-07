@@ -55,15 +55,15 @@ $modversion['author_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.2';
-$modversion['min_db']              = array('mysql' => '5.5');
+$modversion['min_db']              = ['mysql' => '5.5'];
 
 // ------------------- Help files ------------------- //
-$modversion['helpsection'] = array(
+$modversion['helpsection'] = [
     ['name' => _MI_XDONATION_OVERVIEW, 'link' => 'page=help'],
     ['name' => _MI_XDONATION_DISCLAIMER, 'link' => 'page=disclaimer'],
     ['name' => _MI_XDONATION_LICENSE, 'link' => 'page=license'],
     ['name' => _MI_XDONATION_SUPPORT, 'link' => 'page=support'],
-);
+];
 // Run Script After Installation
 $modversion['onInstall'] = 'include/installscript.php';
 

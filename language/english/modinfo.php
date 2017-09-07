@@ -36,8 +36,10 @@ define('_MI_XDONATION_T_xdonation_name_yes_', 'Enter the text for a &quot;YES&qu
 define('_MI_XDONATION_T_xdonation_sub_img_height_', '');
 define('_MI_XDONATION_T_xdonation_sub_img_width_', 'Restrict the dimensions for the above image.' . '<br>' . 'To use the image&apos;s native size leave both boxes blank.');
 
-define('_MI_XDONATION_T_xdonation_text_rawtext',
-       'We are a non-profit organization completely supported by you, the members.  Many organizations have web sites, servers and Internet bandwidth donated by it\'s members.  We pride ourselves on being run and owned as a community, and not by a few power-hungry members.  This means that we need you to be a part of that community.  We encourage every member to contribute to the community in any way that they can.  Since we do not have our servers or bandwidth donated, we have to pay our bills every month to keep things going.  For those of you who can, we ask that you make a monetary contribution in whatever denomination you\'d like.  Every little bit counts.');
+define(
+    '_MI_XDONATION_T_xdonation_text_rawtext',
+       'We are a non-profit organization completely supported by you, the members.  Many organizations have web sites, servers and Internet bandwidth donated by it\'s members.  We pride ourselves on being run and owned as a community, and not by a few power-hungry members.  This means that we need you to be a part of that community.  We encourage every member to contribute to the community in any way that they can.  Since we do not have our servers or bandwidth donated, we have to pay our bills every month to keep things going.  For those of you who can, we ask that you make a monetary contribution in whatever denomination you\'d like.  Every little bit counts.'
+);
 define('_MI_XDONATION_T_xdonation_top_img_height_', '');
 define('_MI_XDONATION_T_xdonation_top_img_width_', 'Restrict the dimensions for the above image.  To use the image\'s native size\r\nleave both boxes blank.');
 define('_MI_XDONATION_T_ipn_dbg_lvl_', 'There is an IPN logging feature which has' . '<br>' . 'three log levels:' . '<br>' . '1) OFF' . '<br>' . '2) Log only Errors' . '<br>' . '3) Log everything' . '<br>' . 'This log is stored in the \"translog\" table.');

@@ -29,7 +29,7 @@
 /* USA                                                                  */
 /************************************************************************/
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $moduleDirName = basename(dirname(__DIR__));
 
@@ -54,7 +54,7 @@ function b_donations_donate_show($options)
     $PP_CURR_CODE = $PP_CURR_CODE[0];
     $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
 
-    $block = array();
+    $block = [];
 
     $PP_RECEIVER_EMAIL = $tr_config['receiver_email'];
     $PP_ITEMNAME       = $tr_config['pp_itemname'];

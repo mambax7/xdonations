@@ -29,7 +29,7 @@
 /* USA                                                                  */
 /************************************************************************/
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $moduleDirName = basename(dirname(__DIR__));
 
@@ -53,7 +53,7 @@ function b_donations_donors_show($options)
 
     $dmshowdate = $options[1];
     $dmshowamt  = $options[2];
-    $block      = array();
+    $block      = [];
     $swingd     = $tr_config['swing_day'];
 
     if (($swingd < 0) || ($swingd > 31)) {

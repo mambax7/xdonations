@@ -570,7 +570,7 @@ function setConfig()
 
     $rsql    = 'SELECT rank_id, rank_title FROM ' . $xoopsDB->prefix('ranks') . ' ';
     $rresult = $xoopsDB->query($rsql);
-    $r_array = array();
+    $r_array = [];
     while (false !== ($r_row = $xoopsDB->fetchRow($rresult))) {
         $r_array[] = $r_row;
     }
@@ -585,14 +585,14 @@ function setConfig()
     XdonationsUtility::showDropBox('pp_curr_code', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_MONEY . '</span>');
     $gsql    = 'SELECT groupid, name FROM ' . $xoopsDB->prefix('groups') . ' WHERE groupid>3';
     $gresult = $xoopsDB->query($gsql);
-    $g_array = array();
+    $g_array = [];
     while (false !== ($g_row = $xoopsDB->fetchRow($gresult))) {
         $g_array[] = $g_row;
     }
     XdonationsUtility::showArrayDropBox('assign_group', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_GROUP . '</span>', $g_array);
     $rsql    = 'SELECT rank_id, rank_title FROM ' . $xoopsDB->prefix('ranks') . ' ';
     $rresult = $xoopsDB->query($rsql);
-    $r_array = array();
+    $r_array = [];
     while (false !== ($r_row = $xoopsDB->fetchRow($rresult))) {
         $r_array[] = $r_row;
     }
@@ -919,7 +919,7 @@ function clearLog($ok = 0)
         //        redirect_header('./index.php', 2, $retMsg);
         //
     } else {
-        xoops_confirm(array('op' => 'ClearLog', 'ok' => 1), 'index.php', _AD_XDONATION_CLEAR_THIS_LOG, _DELETE);
+        xoops_confirm(['op' => 'ClearLog', 'ok' => 1], 'index.php', _AD_XDONATION_CLEAR_THIS_LOG, _DELETE);
     }
 }
 

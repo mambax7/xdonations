@@ -29,7 +29,7 @@
 /* USA                                                                  */
 /************************************************************************/
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $xdBlockDir = basename(dirname(__DIR__));
 xoops_loadLanguage('main', $xdBlockDir);
@@ -51,7 +51,7 @@ function b_donations_donatometer_show($options)
     $PP_CURR_CODE = $PP_CURR_CODE[0];
     $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
 
-    $block = array();
+    $block = [];
 
     $swingd = $tr_config['swing_day'];
     if (($swingd < 0) || ($swingd > 31)) {
