@@ -49,42 +49,38 @@ $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 xoops_loadLanguage('modinfo', $moduleDirName);
 
-$adminmenu = [];
+$adminmenu[] = [
+    'title' => _MI_XDONATION_MENU_00,
+    'link'  => 'admin/index.php',
+    'icon'  => $pathIcon32 . '/home.png',
+];
 
-$i                      = 1;
-$adminmenu[$i]['title'] = _MI_XDONATION_MENU_00;
-$adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
-++$i;
-
-$adminmenu[$i] = [
+$adminmenu[] = [
     'title' => _MI_XDONATION_TREASURY_F_REGISTER,
     'link'  => 'admin/donations.php?op=Treasury',
     'icon'  => $pathIcon32 . '/calculator.png', // or business.png
 ];
 
-++$i;
-$adminmenu[$i] = [
+$adminmenu[] = [
     'title' => _MI_XDONATION_SHOW_LOG,
     'link'  => 'admin/donations.php?op=ShowLog',
     'icon'  => $pathIcon32 . '/view_text.png'
 ];
 
-++$i;
-$adminmenu[$i] = [
+$adminmenu[] = [
     'title' => _MI_XDONATION_SHOW_TXN,
     'link'  => 'admin/transaction.php',
     'icon'  => $pathIcon32 . '/view_detailed.png'
 ];
 
-++$i;
-$adminmenu[$i] = [
+$adminmenu[] = [
     'title' => _MI_XDONATION_CONFIGURATION,
     'link'  => 'admin/donations.php?op=Config',
     'icon'  => $pathIcon32 . '/administration.png'
 ];
 
-++$i;
-$adminmenu[$i]['title'] = _MI_XDONATION_ADMIN_ABOUT;
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
+$adminmenu[] = [
+    'title' => _MI_XDONATION_ADMIN_ABOUT,
+    'link'  => 'admin/about.php',
+    'icon'  => $pathIcon32 . '/about.png',
+];
