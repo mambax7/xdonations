@@ -93,7 +93,7 @@ function b_donations_donors_show($options)
             $ROWS_DONATORS .= '<td style="font-weight: bold;">&nbsp; ';
 
             $muser_id = $row_Recordset1['muser_id'];
-            if (strcmp($row_Recordset1['showname'], 'Yes') == 0 && ($userfoin = XdonationsUtility::getUserInfo($muser_id))) {
+            if (0 == strcmp($row_Recordset1['showname'], 'Yes') && ($userfoin = XdonationsUtility::getUserInfo($muser_id))) {
                 $ROWS_DONATORS .= "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $userfoin->getVar('uid') . "'>" . xdshorten($userfoin->getVar('uname')) . "</a>\n";
             } else {
                 $ROWS_DONATORS .= _MB_XDONATION_ANONYMOUS_SHORT;
@@ -158,20 +158,20 @@ function b_donations_donors_edit($options)
 {
     $form = _MB_XDONATION_NUM_DONORS . ":&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "'  size='4'>";
     $form .= '<br>' . _MB_XDONATION_REVEAL_DATES . ":&nbsp;<select size='1' name='options[1]'><option value='1'";
-    if ($options[1] == 1) {
+    if (1 == $options[1]) {
         $form .= ' selected';
     }
     $form .= '>' . _YES . "</option><option value='0'";
-    if ($options[1] == 0) {
+    if (0 == $options[1]) {
         $form .= ' selected';
     }
     $form .= '>' . _NO . '</option></select>';
     $form .= '<br>' . _MB_XDONATION_REVEAL_AMOUNTS . ":&nbsp;<select size='1' name='options[2]'><option value='1'";
-    if ($options[2] == 1) {
+    if (1 == $options[2]) {
         $form .= ' selected';
     }
     $form .= '>' . _YES . "</option><option value='0'";
-    if ($options[2] == 0) {
+    if (0 == $options[2]) {
         $form .= ' selected';
     }
     $form .= '>' . _NO . '</option></select>';

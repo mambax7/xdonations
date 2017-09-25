@@ -41,7 +41,7 @@ $buttonTray->addElement($sButton);
 $searchForm->addElement($buttonTray);
 $searchForm->display();
 
-if (isset($txn_id) && ($txn_id != 0)) {
+if (isset($txn_id) && (0 != $txn_id)) {
     //find the transaction in the database
     $sql = 'SELECT id, item_name, item_number, custom, memo, option_name1, option_selection1,'
            . ' option_name2, option_selection2, payer_id, mc_gross, mc_fee,'

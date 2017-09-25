@@ -65,7 +65,7 @@ class XdonationsUtility extends XoopsObject
         $dir = opendir($src);
         //    @mkdir($dst);
         while (false !== ($file = readdir($dir))) {
-            if (($file !== '.') && ($file !== '..')) {
+            if (('.' !== $file) && ('..' !== $file)) {
                 if (is_dir($src . '/' . $file)) {
                     self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
                 } else {
@@ -237,7 +237,7 @@ class XdonationsUtility extends XoopsObject
         // open the db
         //    $db_link = mysqli_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
         $keys = '';
-        if ($key_col != '' && $key_val != '') {
+        if ('' != $key_col && '' != $key_val) {
             $keys = "WHERE $key_col = $key_val";
         }
         // query table using key col/val
@@ -249,7 +249,7 @@ class XdonationsUtility extends XoopsObject
             $simple_q = [];
             $row      = $xoopsDB->fetchArray($db_rs);
             // load up array
-            if ($key_col != '' && $key_val != '') {
+            if ('' != $key_col && '' != $key_val) {
                 for ($i = 0; $i < $num_fields; ++$i) {
                     $var            = '';
                     $var            = $xoopsDB->getFieldName($db_rs, $i);
@@ -472,7 +472,7 @@ class XdonationsUtility extends XoopsObject
     public static function updateDbShort($name, $sub, $val, $txt = '')
     {
         global $tr_config, $ilog, $xoopsDB;
-        if ($sub === 'array') {
+        if ('array' === $sub) {
             $newArr    = '';
             $query_cfg = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . " WHERE name = '{$name}'";
             $cfgset    = $xoopsDB->query($query_cfg);
@@ -537,7 +537,7 @@ class XdonationsUtility extends XoopsObject
             $text = str_replace('<br>', "\r\n", $text);
             $text = str_replace('<br>', "\r\n", $text);
 
-            if ($sqlfetch['subtype'] == '') {
+            if ('' == $sqlfetch['subtype']) {
                 $t[$sqlfetch['name']] = $text;
             } else {
                 $t[$sqlfetch['name']][$sqlfetch['subtype']] = $text;

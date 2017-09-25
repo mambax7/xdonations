@@ -194,7 +194,7 @@ function treasury()
         }
         echo ">{$currencySign}{$amt}</span></td>\n";
 
-        if ($numRec != 0) {
+        if (0 != $numRec) {
             echo '<td style="text-align: center;">';
             $jscriptCmd = '<a href="javascript: void 0" onclick="' . "document.recedit.id.value = '$row_Recordset1[id]'; " . "document.recedit.StartDate.value = '$row_Recordset1[fdate]'; ";
             $jscriptCmd .= "document.recedit.Num.value = '$row_Recordset1[num]'; "
@@ -610,12 +610,12 @@ function setConfig()
     }
     echo 'value="0">' . _AD_XDONATION_LOG_OFF . "</option>\n";
     echo '        <option ';
-    if ($tr_config['ipn_dbg_lvl'] == 1) {
+    if (1 == $tr_config['ipn_dbg_lvl']) {
         echo 'selected ';
     }
     echo 'value="1">' . _AD_XDONATION_LOG_ONLY_ERRORS . "</option>\n";
     echo '        <option ';
-    if ($tr_config['ipn_dbg_lvl'] == 2) {
+    if (2 == $tr_config['ipn_dbg_lvl']) {
         echo 'selected ';
     }
     echo 'value="2">' . _AD_XDONATION_LOG_EVERYTHING . "</option>\n";

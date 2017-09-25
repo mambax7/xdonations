@@ -108,7 +108,7 @@ if (!$writeOk) { // HTTP ERROR
 }
 
 // Perform PayPal email account verification
-if (!$dbg && (strcasecmp($pp_varlist['business'], $tr_config['receiver_email']) != 0)) {
+if (!$dbg && (0 != strcasecmp($pp_varlist['business'], $tr_config['receiver_email']))) {
     dprt(sprintf(_MD_XDONATION_BUSINVALID, $pp_varlist['business']), _ERR);
     dprt(sprintf(_MD_XDONATION_RCVINVALID, $pp_varlist['receiver_email']), _ERR);
     $ERR = 1;
@@ -130,18 +130,18 @@ if ($pp_varlist['parent_txn_id']) {
 
 while (!$dbg && !$ERR && !feof($fp)) {
     $res = fgets($fp, 1024);
-    if (strcmp($res, 'VERIFIED') == 0) {
+    if (0 == strcmp($res, 'VERIFIED')) {
         // Ok - PayPal has told us we have a valid IPN here
         dprt(_MD_XDONATION_VERIFIED, _INF);
 
         // Check for a reversal for a refund
-        if (strcmp($pp_varlist['payment_status'], 'Refunded') == 0
-            || strcmp($pp_varlist['txn_type'], 'Reversal') == 0) {
+        if (0 == strcmp($pp_varlist['payment_status'], 'Refunded')
+            || 0 == strcmp($pp_varlist['txn_type'], 'Reversal')) {
             // Verify the reversal
             dprt(_MD_XDONATION_REFUND, _INF);
-            if (($parent_NumDups == 0) || strcmp($parent_row_Recordset1['payment_status'], 'Completed')
-                || (strcmp($parent_row_Recordset1['txn_type'], 'web_accept') != 0
-                    && strcmp($parent_row_Recordset1['txn_type'], 'send_money') != 0)) {
+            if ((0 == $parent_NumDups) || strcmp($parent_row_Recordset1['payment_status'], 'Completed')
+                || (0 != strcmp($parent_row_Recordset1['txn_type'], 'web_accept')
+                    && 0 != strcmp($parent_row_Recordset1['txn_type'], 'send_money'))) {
                 // This is an error.  A reversal implies a pre-existing completed transaction
                 dprt(_MD_XDONATION_TRANSMISSING, _ERR);
                 foreach ($_POST as $key => $val) {
@@ -216,15 +216,15 @@ while (!$dbg && !$ERR && !feof($fp)) {
 
             break;
             // Look for a normal payment
-        } elseif ((strcmp($pp_varlist['payment_status'], 'Completed') == 0)
-                  && ((strcmp($pp_varlist['txn_type'], 'web_accept') == 0)
-                      || (strcmp($pp_varlist['txn_type'], 'send_money') == 0))) {
+        } elseif ((0 == strcmp($pp_varlist['payment_status'], 'Completed'))
+                  && ((0 == strcmp($pp_varlist['txn_type'], 'web_accept'))
+                      || (0 == strcmp($pp_varlist['txn_type'], 'send_money')))) {
             dprt(_MD_XDONATION_NORMAL_TXN, _INF);
             if ($lp) {
                 fwrite($lp, $pp_varlist['payer_email'] . ' ' . $pp_varlist['payment_status'] . ' ' . $pp_varlist['payment_date'] . "\n");
             }
 
-            if ($NumDups != 0) { // Check for a duplicate txn_id
+            if (0 != $NumDups) { // Check for a duplicate txn_id
                 dprt(_MD_XDONATION_DUPLICATETXN, _ERR);
                 foreach ($_POST as $key => $val) {
                     dprt("$key => $val", _ERR);
@@ -235,7 +235,7 @@ while (!$dbg && !$ERR && !feof($fp)) {
             $pp_varlist['payment_date'] = strftime('%Y-%m-%d %H:%M:%S', strtotime($pp_varlist['payment_date']));
             $field_values               = $field_names = '';
             for ($i = 0, $iMax = count($pp_varname); $i < $iMax; ++$i) {
-                if ($i != 0) {
+                if (0 != $i) {
                     $field_names  .= ',';
                     $field_values .= ',';
                 }
@@ -251,8 +251,8 @@ while (!$dbg && !$ERR && !feof($fp)) {
 
             // add xoopsUsers (not anon) to group if selected by Admin in config
             if (!empty($pp_varlist['custom'])
-                && (($pp_varlist['option_selection1'] === 'Yes')
-                    || ($tr_config['don_forceadd'] == '1'))) {
+                && (('Yes' === $pp_varlist['option_selection1'])
+                    || ('1' == $tr_config['don_forceadd']))) {
                 $memberHandler = xoops_getHandler('member');
                 $edituser      = $memberHandler->getUser($pp_varlist['custom']);
 
@@ -309,7 +309,7 @@ while (!$dbg && !$ERR && !feof($fp)) {
             dprt('strcmp txn_type: ' . strcmp($pp_varlist['txn_type'], 'send_money'), _ERR);
             break;
         }
-    } elseif (strcmp($res, 'INVALID') == 0) {
+    } elseif (0 == strcmp($res, 'INVALID')) {
         // log for manual investigation
         dprt(_MD_XDONATION_INVALIDIPN, _ERR);
         foreach ($_POST as $key => $val) {
