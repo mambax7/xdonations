@@ -29,6 +29,8 @@
 /* USA                                                                  */
 /************************************************************************/
 
+require_once __DIR__ . '/preloads/autoloader.php';
+
 $moduleDirName = basename(__DIR__);
 
 $modversion['version']             = '2.00';

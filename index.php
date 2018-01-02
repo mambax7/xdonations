@@ -30,7 +30,7 @@
 /************************************************************************/
 
 include __DIR__ . '/header.php';
-require_once __DIR__ . '/class/utility.php';
+require_once __DIR__ . '/class/Utility.php';
 $GLOBALS['xoopsOption']['template_main'] = 'donations_main.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 

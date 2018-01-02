@@ -22,7 +22,7 @@ require_once __DIR__ . '/admin_header.php';
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include __DIR__ . '/../class/utility.php';
+include __DIR__ . '/../class/Utility.php';
 
 xoops_cp_header();
 

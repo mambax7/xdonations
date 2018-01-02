@@ -34,7 +34,7 @@
 $xdBlockDir = basename(dirname(__DIR__));
 xoops_loadLanguage('main', $xdBlockDir);
 
-require_once XOOPS_ROOT_PATH . "/modules/{$xdBlockDir}/class/utility.php";
+require_once XOOPS_ROOT_PATH . "/modules/{$xdBlockDir}/class/Utility.php";
 
 /**
  * @param $options

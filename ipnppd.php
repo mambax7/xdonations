@@ -31,7 +31,7 @@
 
 //$xoopsOption['nocommon'] = 1;
 include __DIR__ . '/header.php';
-require_once __DIR__ . '/class/utility.php';
+require_once __DIR__ . '/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 $tr_config  = XdonationsUtility::getConfigInfo();

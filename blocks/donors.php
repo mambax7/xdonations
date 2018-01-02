@@ -35,7 +35,7 @@ $moduleDirName = basename(dirname(__DIR__));
 
 xoops_loadLanguage('main', $moduleDirName);
 
-require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/utility.php";
+require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/Utility.php";
 
 /**
  * @param $options

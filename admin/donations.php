@@ -32,7 +32,7 @@
 include __DIR__ . '/../../../include/cp_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
-include __DIR__ . '/../class/utility.php';
+include __DIR__ . '/../class/Utility.php';
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
@@ -148,14 +148,14 @@ function treasury()
                  . min($totalPages_Recordset1, $pageNum_Recordset1 + 1)
                  . "\">\n"
                  . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\">\n"
-                 . '<input type="submit" name="navig" value="&gt;" title="'
+                 . '<input type="submit" name="navig" value=">" title="'
                  . _AD_XDONATION_NEXT_OLDEST
                  . "\"></form></td>\n";
             echo "<td><form action=\"donations.php#AdminTop\" method=\"post\">\n"
                  . "<input type=\"hidden\" name=\"op\" value=\"Treasury\">\n"
                  . "<input type=\"hidden\" name=\"pageNum_Recordset1\" value=\"{$totalPages_Recordset1}\">\n"
                  . "<input type=\"hidden\" name=\"totalRows_Recordset1\" value=\"{$totalRows_Recordset1}\">\n"
-                 . '<input type="submit" name="navig" value="&gt;|" title="'
+                 . '<input type="submit" name="navig" value=">|" title="'
                  . _AD_XDONATION_OLDEST
                  . "\"></form></td>\n";
         }
