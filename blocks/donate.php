@@ -46,13 +46,13 @@ function b_donations_donate_show($options)
     global $xoopsDB, $xoopsUser;
 
     $moduleDirName = basename(dirname(__DIR__));
-    $tr_config     = XdonationsUtility::getConfigInfo();
+    $tr_config     = $utility::getConfigInfo();
     $paypal_url    = explode('|', $tr_config['paypal_url']);
     $paypal_url    = $paypal_url[0];
     //determine the currency
     $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
     $PP_CURR_CODE = $PP_CURR_CODE[0];
-    $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
+    $currencySign = $utility::defineCurrency($PP_CURR_CODE);
 
     $block = [];
 

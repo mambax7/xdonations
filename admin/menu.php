@@ -30,11 +30,11 @@
 
 /************************************************************************/
 
-use Xoopsmodules\xdonations;
+use XoopsModules\Xdonations;
 
 require_once __DIR__ . '/../class/Helper.php';
 //require_once __DIR__ . '/../include/common.php';
-$helper = xdonations\Helper::getInstance();
+$helper = Xdonations\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');

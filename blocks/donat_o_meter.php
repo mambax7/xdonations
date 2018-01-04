@@ -45,11 +45,11 @@ function b_donations_donatometer_show($options)
     global $xoopsDB;
     $xdBlockDir = basename(dirname(__DIR__));
 
-    $tr_config = XdonationsUtility::getConfigInfo();
+    $tr_config = $utility::getConfigInfo();
     //determine the currency
     $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
     $PP_CURR_CODE = $PP_CURR_CODE[0];
-    $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
+    $currencySign = $utility::defineCurrency($PP_CURR_CODE);
 
     $block = [];
 
@@ -193,7 +193,7 @@ function b_donations_donatometer_show($options)
                 $var     .= "<tr><td style=\"width: 100%; text-align: {$dmalign};\" colspan=\"2\">\n";
                 // Observe the user's wish regarding revealing their name
                 $muser_id = $row_Recordset3['muser_id'];
-                if (0 == strcmp($row_Recordset3['showname'], 'Yes') && ($userfoin = XdonationsUtility::getUserInfo($muser_id))) {
+                if (0 == strcmp($row_Recordset3['showname'], 'Yes') && ($userfoin = $utility::getUserInfo($muser_id))) {
                     $var .= "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $userfoin->getVar('uid') . "'>" . $userfoin->getVar('uname') . "</a>\n";
                 } else {
                     $var .= _MB_XDONATION_ANONYMOUS_SHORT;

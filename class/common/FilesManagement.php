@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xdonations\common;
+<?php namespace XoopsModules\Xdonations\Common;
 
 /*
  You may not change or alter any portion of this comment or credits

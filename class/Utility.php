@@ -1,8 +1,8 @@
-<?php namespace Xoopsmodules\xdonations;
+<?php namespace XoopsModules\Xdonations;
 
 use Xmf\Request;
-use Xoopsmodules\xdonations;
-use Xoopsmodules\xdonations\common;
+use XoopsModules\Xdonations;
+use XoopsModules\Xdonations\Common;
 
 /**
  * Class Utility
@@ -90,7 +90,7 @@ class Utility
      *
      * EXAMPLE USAGE:
      *
-     * $list=XdonationsUtility::runSimpleQuery($xoopsDB->prefix('donations_transactions'));
+     * $list=$utility::runSimpleQuery($xoopsDB->prefix('donations_transactions'));
      *
      * @param  string $table_name DB table name
      * @param  string $key_col    (optional) table column name

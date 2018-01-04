@@ -34,15 +34,15 @@ include __DIR__ . '/header.php';
 require_once __DIR__ . '/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$tr_config  = XdonationsUtility::getConfigInfo();
+$tr_config  = $utility::getConfigInfo();
 $paypal_url = explode('|', $tr_config['paypal_url']);
 $paypal_url = $paypal_url[0];
 //determine the currency
 $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
 $PP_CURR_CODE = $PP_CURR_CODE[0];
-$currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
+$currencySign = $utility::defineCurrency($PP_CURR_CODE);
 
-$pp_varlist = XdonationsUtility::runSimpleQuery($xoopsDB->prefix('donations_transactions'), '', '', ['id']);
+$pp_varlist = $utility::runSimpleQuery($xoopsDB->prefix('donations_transactions'), '', '', ['id']);
 
 define('_ERR', 1);
 define('_INF', 2);

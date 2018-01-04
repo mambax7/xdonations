@@ -45,11 +45,11 @@ function b_donations_donors_show($options)
 {
     global $xoopsDB;
 
-    $tr_config = XdonationsUtility::getConfigInfo();
+    $tr_config = $utility::getConfigInfo();
     //determine the currency
     $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
     $PP_CURR_CODE = $PP_CURR_CODE[0];
-    $currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
+    $currencySign = $utility::defineCurrency($PP_CURR_CODE);
 
     $dmshowdate = $options[1];
     $dmshowamt  = $options[2];
@@ -93,7 +93,7 @@ function b_donations_donors_show($options)
             $ROWS_DONATORS .= '<td style="font-weight: bold;">&nbsp; ';
 
             $muser_id = $row_Recordset1['muser_id'];
-            if (0 == strcmp($row_Recordset1['showname'], 'Yes') && ($userfoin = XdonationsUtility::getUserInfo($muser_id))) {
+            if (0 == strcmp($row_Recordset1['showname'], 'Yes') && ($userfoin = $utility::getUserInfo($muser_id))) {
                 $ROWS_DONATORS .= "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $userfoin->getVar('uid') . "'>" . xdshorten($userfoin->getVar('uname')) . "</a>\n";
             } else {
                 $ROWS_DONATORS .= _MB_XDONATION_ANONYMOUS_SHORT;

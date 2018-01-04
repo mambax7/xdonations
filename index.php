@@ -34,14 +34,14 @@ require_once __DIR__ . '/class/Utility.php';
 $GLOBALS['xoopsOption']['template_main'] = 'donations_main.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-$tr_config  = XdonationsUtility::getConfigInfo(); //load the module configuration settings
+$tr_config  = $utility::getConfigInfo(); //load the module configuration settings
 $paypal_url = explode('|', $tr_config['paypal_url']);
 $paypal_url = $paypal_url[0];
 
 //determine the currency
 $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]
 $PP_CURR_CODE = $PP_CURR_CODE[0];
-$currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
+$currencySign = $utility::defineCurrency($PP_CURR_CODE);
 
 $swingd            = $tr_config['swing_day'];
 $PP_RECEIVER_EMAIL = $tr_config['receiver_email'];

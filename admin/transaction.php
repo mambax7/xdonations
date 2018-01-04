@@ -16,13 +16,15 @@
  * @since     ::      File available since version 1.96
  */
 
+use XoopsModules\Xdonations;
+
 require_once __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/admin_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include __DIR__ . '/../class/Utility.php';
+// include __DIR__ . '/../class/Utility.php';
 
 xoops_cp_header();
 
@@ -70,14 +72,14 @@ if (isset($txn_id) && (0 != $txn_id)) {
     if ('' != $row_txnRecord['option_name2']) {
         $txnForm->addElement(new XoopsFormLabel($row_txnRecord['option_name2'], $row_txnRecord['option_selection2']));
     }
-    $amount = XdonationsUtility::defineCurrency($row_txnRecord['mc_currency'])
+    $amount = $utility::defineCurrency($row_txnRecord['mc_currency'])
               . $row_txnRecord['mc_gross']
               . ' ('
               . $row_txnRecord['mc_currency']
               . ') '
               . _AD_XDONATION_GROSS
               . '<br>'
-              . XdonationsUtility::defineCurrency($row_txnRecord['mc_currency'])
+              . $utility::defineCurrency($row_txnRecord['mc_currency'])
               . $row_txnRecord['mc_net']
               . ' ('
               . $row_txnRecord['mc_currency']

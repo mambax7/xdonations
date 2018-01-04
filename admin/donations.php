@@ -29,18 +29,20 @@
 /* USA                                                                  */
 /************************************************************************/
 
+use XoopsModules\Xdonations;
+
 include __DIR__ . '/../../../include/cp_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
-include __DIR__ . '/../class/Utility.php';
+// include __DIR__ . '/../class/Utility.php';
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$tr_config = XdonationsUtility::getConfigInfo();
+$tr_config = $utility::getConfigInfo();
 //determine the currency
 $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR,AUD]
 $PP_CURR_CODE = $PP_CURR_CODE[0];
-$currencySign = XdonationsUtility::defineCurrency($PP_CURR_CODE);
+$currencySign = $utility::defineCurrency($PP_CURR_CODE);
 
 /***************************************************************************
  *
@@ -382,6 +384,11 @@ function editFinancialReg()
 function setConfig()
 {
     global $tr_config, $xoopsModule, $modversion, $xoopsDB;
+
+
+    /** @var Xdonations\Utility $utility */
+    $utility = new Xdonations\Utility();
+
     //------------------------------------------------------------------------
     $adminObject = \Xmf\Module\Admin::getInstance();
     $adminObject->displayNavigation('donations.php?op=Config'); ?>
@@ -496,14 +503,14 @@ function setConfig()
     echo '<h3>' . _AD_XDONATION_CONFIG_MODULE . "</h3>\n";
     echo "<table style=\"border-width: 1px; text-align: center;\">\n";
 
-    XdonationsUtility::showTextBox('don_button_top', '<span style="font-weight: bold;">' . _AD_XDONATION_IMG_BUTTON_TOP . '</span>', '', '70', 'onChange="return validateURL(this,this.value);"');
-    XdonationsUtility::showImgXYBox('don_top_img_width', 'don_top_img_height', '<span style="font-weight: bold;">' . _AD_XDONATION_IMAGE_SIZE . '</span>', '4', "onChange='return validInt(this,\"" . _AD_XDONATION_IMAGE_SIZE . '",0,"' . _AD_XDONATION_ALERTE_INPUT_NUMBER . "\");'");
-    XdonationsUtility::showTextBox('don_button_submit', '<span style="font-weight: bold;">' . _AD_XDONATION_IMG_BUTTON_URL . '</span>', '', '70', 'onChange="return validateURL(this,this.value);"');
-    XdonationsUtility::showImgXYBox('don_sub_img_width', 'don_sub_img_height', '<span style="font-weight: bold;">' . _AD_XDONATION_IMAGE_SIZE . '</span>', '4', "onChange='return validInt(this,\"" . _AD_XDONATION_IMAGE_SIZE . '",0,"' . _AD_XDONATION_ALERTE_INPUT_NUMBER . "\");'");
+    $utility::showTextBox('don_button_top', '<span style="font-weight: bold;">' . _AD_XDONATION_IMG_BUTTON_TOP . '</span>', '', '70', 'onChange="return validateURL(this,this.value);"');
+    $utility::showImgXYBox('don_top_img_width', 'don_top_img_height', '<span style="font-weight: bold;">' . _AD_XDONATION_IMAGE_SIZE . '</span>', '4', "onChange='return validInt(this,\"" . _AD_XDONATION_IMAGE_SIZE . '",0,"' . _AD_XDONATION_ALERTE_INPUT_NUMBER . "\");'");
+    $utility::showTextBox('don_button_submit', '<span style="font-weight: bold;">' . _AD_XDONATION_IMG_BUTTON_URL . '</span>', '', '70', 'onChange="return validateURL(this,this.value);"');
+    $utility::showImgXYBox('don_sub_img_width', 'don_sub_img_height', '<span style="font-weight: bold;">' . _AD_XDONATION_IMAGE_SIZE . '</span>', '4', "onChange='return validInt(this,\"" . _AD_XDONATION_IMAGE_SIZE . '",0,"' . _AD_XDONATION_ALERTE_INPUT_NUMBER . "\");'");
     //"onChange='return validInt(this,"._AD_XDONATION_IMAGE_SIZE.")'"
-    XdonationsUtility::showTextBox('don_name_prompt', '<span style="font-weight: bold;">' . _AD_XDONATION_USERNAME_REQUEST . '</span>', '', '70', '');
-    XdonationsUtility::showTextBox('don_name_yes', '<span style="font-weight: bold;">' . _AD_XDONATION_USERNAME_REQUEST_YES . '</span>', '', '50', '');
-    XdonationsUtility::showTextBox('don_name_no', '<span style="font-weight: bold;">' . _AD_XDONATION_USERNAME_REQUEST_NO . '</span>', '', '50', '');
+    $utility::showTextBox('don_name_prompt', '<span style="font-weight: bold;">' . _AD_XDONATION_USERNAME_REQUEST . '</span>', '', '70', '');
+    $utility::showTextBox('don_name_yes', '<span style="font-weight: bold;">' . _AD_XDONATION_USERNAME_REQUEST_YES . '</span>', '', '50', '');
+    $utility::showTextBox('don_name_no', '<span style="font-weight: bold;">' . _AD_XDONATION_USERNAME_REQUEST_NO . '</span>', '', '50', '');
 
     $desc = 'This is where you can appeal to your' . 'users and your community for donations.' . 'Suggestion: Explain why you need donations,' . 'what you do with the money and how you' . 'manage it. Make them comfortable that' . 'they are not throwing their money away.';
 
@@ -519,7 +526,7 @@ function setConfig()
          . "<textarea name=\"var_xdonation_text-rawtext-txt\" cols=\"100\" rows=\"20\">{$donText}</textarea></td>\n";
     echo "</tr>\n";
 
-    //    XdonationsUtility::showTextBox('don_amt_checked', '<span style=\'font-weight: bold;\'>'._AD_XDONATION_AMOUNT_DEFAULT.'</span>', '', '4', "onChange=\"return validInt(this,'"._AD_XDONATION_AMOUNT_DEFAULT."',1,'"._AD_XDONATION_ALERTE_INPUT_NUMBER."');\"");
+    //    $utility::showTextBox('don_amt_checked', '<span style=\'font-weight: bold;\'>'._AD_XDONATION_AMOUNT_DEFAULT.'</span>', '', '4', "onChange=\"return validInt(this,'"._AD_XDONATION_AMOUNT_DEFAULT."',1,'"._AD_XDONATION_ALERTE_INPUT_NUMBER."');\"");
 
     echo "</table>\n";
     echo "<br>\n";
@@ -574,30 +581,30 @@ function setConfig()
     while (false !== ($r_row = $xoopsDB->fetchRow($rresult))) {
         $r_array[] = $r_row;
     }
-    XdonationsUtility::showDropBox('paypal_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_URL . '</span>');
-    XdonationsUtility::showTextBox('receiver_email', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_EMAIL_RECEIVER . '</span>', '', '40', '');
-    XdonationsUtility::showTextBox('ty_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_URL_SUCCESS . '</span>', '', '80', 'onChange="checkCancelledURL(); return validateURL(this,this.value);"');
-    XdonationsUtility::showTextBox('pp_cancel_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_URL_CANCELED . '</span>', '', '80', 'onChange="return validateURL(this,this.value);"');
-    XdonationsUtility::showTextBox('pp_itemname', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_ITEM_NAME . '</span>', '', '20', '');
-    XdonationsUtility::showTextBox('pp_item_num', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_ITEM_NUMBER . '</span>', '', '20', '');
-    XdonationsUtility::showTextBox('pp_image_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_IMG . '</span>', '', '60', '');
-    XdonationsUtility::showYNBox('pp_get_addr', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_ASK_CP_ADRESS . '</span>');
-    XdonationsUtility::showDropBox('pp_curr_code', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_MONEY . '</span>');
+    $utility::showDropBox('paypal_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_URL . '</span>');
+    $utility::showTextBox('receiver_email', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_EMAIL_RECEIVER . '</span>', '', '40', '');
+    $utility::showTextBox('ty_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_URL_SUCCESS . '</span>', '', '80', 'onChange="checkCancelledURL(); return validateURL(this,this.value);"');
+    $utility::showTextBox('pp_cancel_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_IPN_URL_CANCELED . '</span>', '', '80', 'onChange="return validateURL(this,this.value);"');
+    $utility::showTextBox('pp_itemname', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_ITEM_NAME . '</span>', '', '20', '');
+    $utility::showTextBox('pp_item_num', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_ITEM_NUMBER . '</span>', '', '20', '');
+    $utility::showTextBox('pp_image_url', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_IMG . '</span>', '', '60', '');
+    $utility::showYNBox('pp_get_addr', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_ASK_CP_ADRESS . '</span>');
+    $utility::showDropBox('pp_curr_code', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_MONEY . '</span>');
     $gsql    = 'SELECT groupid, name FROM ' . $xoopsDB->prefix('groups') . ' WHERE groupid>3';
     $gresult = $xoopsDB->query($gsql);
     $g_array = [];
     while (false !== ($g_row = $xoopsDB->fetchRow($gresult))) {
         $g_array[] = $g_row;
     }
-    XdonationsUtility::showArrayDropBox('assign_group', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_GROUP . '</span>', $g_array);
+    $utility::showArrayDropBox('assign_group', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_GROUP . '</span>', $g_array);
     $rsql    = 'SELECT rank_id, rank_title FROM ' . $xoopsDB->prefix('ranks') . ' ';
     $rresult = $xoopsDB->query($rsql);
     $r_array = [];
     while (false !== ($r_row = $xoopsDB->fetchRow($rresult))) {
         $r_array[] = $r_row;
     }
-    XdonationsUtility::showArrayDropBox('assign_rank', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_RANK . '</span>', $r_array);
-    XdonationsUtility::showYNBox('don_forceadd', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_ADD_ANYWAY . '</span>');
+    $utility::showArrayDropBox('assign_rank', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_PP_RANK . '</span>', $r_array);
+    $utility::showYNBox('don_forceadd', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_ADD_ANYWAY . '</span>');
 
     echo "</table><br>\n";
 
@@ -621,7 +628,7 @@ function setConfig()
     echo 'value="2">' . _AD_XDONATION_LOG_EVERYTHING . "</option>\n";
     echo "      </select>\n" . "    </td>\n" . "  </tr>\n";
 
-    XdonationsUtility::showTextBox('ipn_log_entries', '<nobr><span style=\'font-weight: bold;\'>' . _AD_XDONATION_LOG_ENTRY . '</span></nobr>', '', '4', '');
+    $utility::showTextBox('ipn_log_entries', '<nobr><span style=\'font-weight: bold;\'>' . _AD_XDONATION_LOG_ENTRY . '</span></nobr>', '', '4', '');
 
     $desc = 'This box shows the link to the IPN recorder.
     This link must be pasted EXACTLY as it is
@@ -659,7 +666,7 @@ function setConfig()
     echo "    <td style=\"text-align: center; font-weight: bold;\" class=\"title\">\n" . '      <h3>' . _AD_XDONATION_GOAL_PREFERENCES . "</h3>\n";
     echo "      <table style=\"border-width: 1px; text-align: center;\">\n" . "        <tr><td style=\"text-align: center;\">\n";
     echo "          <table style=\"border-width: 1px; text-align: center;\">\n";
-    XdonationsUtility::showDropBox('use_goal', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_GOAL_TYPE . '.</span>');
+    $utility::showDropBox('use_goal', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_GOAL_TYPE . '.</span>');
     echo "          </table>\n";
 
     $query_Recordset1     = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . " WHERE name = 'week_goal' AND subtype<>'Default'";
@@ -717,7 +724,7 @@ function setConfig()
 
     echo "</table>\n";
     echo "<table style=\"border-width: 1px; width: 100px; text-align: center;\">\n";
-    XdonationsUtility::showTextBox('swing_day', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_SWING_DAY . '</span>', '175', '4', "onChange='return validInt(this,\"" . _AD_XDONATION_SWING_DAY . '",1,"' . _AD_XDONATION_ALERTE_INPUT_NUMBER . "\");'");
+    $utility::showTextBox('swing_day', '<span style=\'font-weight: bold;\'>' . _AD_XDONATION_SWING_DAY . '</span>', '175', '4', "onChange='return validInt(this,\"" . _AD_XDONATION_SWING_DAY . '",1,"' . _AD_XDONATION_ALERTE_INPUT_NUMBER . "\");'");
     echo "</table>\n";
 
     $query_Recordset1     = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . " WHERE name = 'quarter_goal' AND subtype<>'Default'";
@@ -780,14 +787,14 @@ function updateConfig()
                 if (preg_match('/([^-]*)-txt/', $subtype[1], $subtype2)) {
                     $textarea = addslashes($value);
                     echo "$varnm $subtype2[1] text=> " . nl2br(htmlspecialchars($textarea)) . "<br>\n";
-                    $error &= XdonationsUtility::updateDb($varnm, $subtype2[1], '0', $textarea);
+                    $error &= $utility::updateDb($varnm, $subtype2[1], '0', $textarea);
                 } else {
                     echo "$varnm $subtype[1] => $value<br>\n";
-                    $error &= XdonationsUtility::updateDbShort($varnm, $subtype[1], $value);
+                    $error &= $utility::updateDbShort($varnm, $subtype[1], $value);
                 }
             } else {
                 echo "$varnm => $value<br>\n";
-                $error &= XdonationsUtility::updateDbShort($varnm, '', $value);
+                $error &= $utility::updateDbShort($varnm, '', $value);
             }
         }
     }

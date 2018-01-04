@@ -16,14 +16,19 @@
  * @author              XOOPS Development Team
  **/
 
+use XoopsModules\Xdonations;
+
 require_once __DIR__ . '/../../../include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-//require_once __DIR__ . '/../class/Utility.php';
-//require_once __DIR__ . '/../include/common.php';
+$moduleDirName = basename(dirname(__DIR__));
+require_once __DIR__ . '/../include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper = \Xmf\Module\Helper::getHelper($moduleDirName);
+/** @var Xdonations\Helper $helper */
+$helper = Xdonations\Helper::getInstance();
+
+/** @var Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 
 $pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);

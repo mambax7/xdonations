@@ -31,7 +31,7 @@ function xoops_module_pre_install_xdonations(XoopsModule $module)
 
     include __DIR__ . '/../preloads/autoloader.php';
     /** @var \Utility $utility */
-    $utility = new \Xoopsmodules\xdonations\Utility();
+    $utility = new \XoopsModules\Xdonations\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
@@ -59,9 +59,9 @@ function xoops_module_install_xdonations(XoopsModule $module)
 
     $moduleDirName = basename(dirname(__DIR__));
 
-    $helper       = xdonations\Helper::getInstance();
-    $utility      = new xdonations\Utility();
-    $configurator = new xdonations\Configurator();
+    $helper       = Xdonations\Helper::getInstance();
+    $utility      = new Xdonations\Utility();
+    $configurator = new Xdonations\Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
