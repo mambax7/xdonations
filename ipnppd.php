@@ -215,7 +215,7 @@ while (!$dbg && !$ERR && !feof($fp)) {
             dprt('SQL result = ' . $Result1, _INF);
 
             break;
-            // Look for a normal payment
+        // Look for a normal payment
         } elseif ((0 == strcmp($pp_varlist['payment_status'], 'Completed'))
                   && ((0 == strcmp($pp_varlist['txn_type'], 'web_accept'))
                       || (0 == strcmp($pp_varlist['txn_type'], 'send_money')))) {

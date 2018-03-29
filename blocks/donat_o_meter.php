@@ -29,12 +29,12 @@
 /* USA                                                                  */
 /************************************************************************/
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Xdonations;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 $xdBlockDir = basename(dirname(__DIR__));
 xoops_loadLanguage('main', $xdBlockDir);
-
-require_once XOOPS_ROOT_PATH . "/modules/{$xdBlockDir}/class/Utility.php";
 
 /**
  * @param $options
@@ -44,7 +44,7 @@ function b_donations_donatometer_show($options)
 {
     global $xoopsDB;
     $xdBlockDir = basename(dirname(__DIR__));
-
+    $utility = new Xdonations\Utility();
     $tr_config = $utility::getConfigInfo();
     //determine the currency
     $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]

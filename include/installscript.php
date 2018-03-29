@@ -142,7 +142,7 @@ function update_lg()
     }
 }
 
-eval('function xoops_module_install_' . $moduleDirName . '(XoopsModule $module=NULL)
+eval('function xoops_module_install_' . $moduleDirName . '(\XoopsModule $module=NULL)
         {
         return xoops_module_install_xyp_base($module);
         }

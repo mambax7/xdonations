@@ -29,13 +29,13 @@
 /* USA                                                                  */
 /************************************************************************/
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Xdonations;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 $moduleDirName = basename(dirname(__DIR__));
 
 xoops_loadLanguage('main', $moduleDirName);
-
-require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/Utility.php";
 
 /**
  * @param $options
@@ -44,7 +44,7 @@ require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/Utility.php";
 function b_donations_donors_show($options)
 {
     global $xoopsDB;
-
+    $utility = new Xdonations\Utility();
     $tr_config = $utility::getConfigInfo();
     //determine the currency
     $PP_CURR_CODE = explode('|', $tr_config['pp_curr_code']); // [USD,GBP,JPY,CAD,EUR]

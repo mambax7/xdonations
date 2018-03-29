@@ -9,11 +9,11 @@ use XoopsModules\Xdonations\Common;
  */
 class Utility
 {
-    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    use common\ServerStats; // getServerStats Trait
+    use Common\ServerStats; // getServerStats Trait
 
-    use common\FilesManagement; // Files Management Trait
+    use Common\FilesManagement; // Files Management Trait
 
     //--------------- Custom module methods -----------------------------
 
@@ -60,7 +60,7 @@ class Utility
         $query_cfg = 'SELECT * FROM ' . $xoopsDB->prefix('donations_config') . " WHERE subtype = '' OR subtype = 'array'";
         $cfgset    = $xoopsDB->query($query_cfg);
         $tr_config = [];
-        while ($cfgset && $row = $xoopsDB->fetchArray($cfgset)) {
+        while (false !== ($cfgset && $row = $xoopsDB->fetchArray($cfgset))) {
             $tr_config[$row['name']] = $row['value'];
         }
 
@@ -155,7 +155,7 @@ class Utility
         $cfgset    = $xoopsDB->query($query_cfg);
         if ($cfgset) {
             $cfg  = $xoopsDB->fetchArray($cfgset);
-            $text = htmlentities($cfg['text']);
+            $text = htmlentities($cfg['text'], ENT_QUOTES | ENT_HTML5);
             echo "<tr>\n" . "  <td title=\"{$text}\" style=\"text-align: right;\">{$desc}</td>\n" . "  <td title=\"{$text}\" style=\"text-align: left;\">";
             echo "    <select size=\"1\" name=\"var_{$name}\">";
             if ($cfg['value']) {
@@ -183,7 +183,7 @@ class Utility
         $cfgset    = $xoopsDB->query($query_cfg);
         if ($cfgset) {
             $cfg  = $xoopsDB->fetchArray($cfgset);
-            $text = htmlentities($cfg['text']);
+            $text = htmlentities($cfg['text'], ENT_QUOTES | ENT_HTML5);
             echo "<tr style=\"text-align: center;\">\n" . "  <td title=\"{$text}\" style=\"text-align: right; width: 50%;\">{$desc}</td>\n" . "  <td title=\"{$text}\" style=\"text-align: left;\">\n";
             echo "    <select size=\"1\" name=\"var_{$name}-array\">\n";
             if (isset($cfg['value'])) {
@@ -215,7 +215,7 @@ class Utility
         $cfgset    = $xoopsDB->query($query_cfg);
         if ($cfgset) {
             $cfg  = $xoopsDB->fetchArray($cfgset);
-            $text = htmlentities($cfg['text']);
+            $text = htmlentities($cfg['text'], ENT_QUOTES | ENT_HTML5);
             echo "<tr>\n" . "  <td title=\"{$text}\" style=\"text-align: right;\">{$desc}</td>\n" . "  <td title=\"{$text}\" style=\"text-align: left;\">\n";
             echo "    <select size=\"1\" name=\"var_{$name}\">\n";
             if (isset($cfg['value'])) {
@@ -258,7 +258,7 @@ class Utility
         $cfgset    = $xoopsDB->query($query_cfg);
         if ($cfgset) {
             $cfg  = $xoopsDB->fetchArray($cfgset);
-            $text = htmlentities($cfg['text']);
+            $text = htmlentities($cfg['text'], ENT_QUOTES | ENT_HTML5);
             echo "<tr>\n"
                  . "  <td title=\"{$text}\" style=\"text-align: right; width: {$tdWidth};\">{$desc}</td>\n"
                  . "  <td title=\"{$text}\" style=\"text-align: left;\">\n"
@@ -287,7 +287,7 @@ class Utility
         if ($cfgset) {
             $cfg = $xoopsDB->fetchArray($cfgset);
 
-            $text = htmlentities($cfg['text']);
+            $text = htmlentities($cfg['text'], ENT_QUOTES | ENT_HTML5);
             echo "<tr>\n" . "  <td title=\"{$text}\" style=\"text-align: right;\">{$desc}</td>\n" . "  <td title=\"{$text}\" style=\"text-align: left;\">\n";
             echo '    &nbsp;' . _AD_XDONATION_WIDTH . "&nbsp;\n" . "    <input size=\"{$inpSize}\" name=\"var_{$cfg['name']}\" type=\"text\" value=\"{$cfg['value']}\" {$extra}>\n";
 

@@ -29,13 +29,15 @@
 /* USA                                                                  */
 /************************************************************************/
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Xdonations;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 $moduleDirName = basename(dirname(__DIR__));
 
 xoops_loadLanguage('main', $moduleDirName);
 
-require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/Utility.php";
+
 
 /**
  * @param $options
@@ -46,6 +48,7 @@ function b_donations_donate_show($options)
     global $xoopsDB, $xoopsUser;
 
     $moduleDirName = basename(dirname(__DIR__));
+    $utility = new Xdonations\Utility();
     $tr_config     = $utility::getConfigInfo();
     $paypal_url    = explode('|', $tr_config['paypal_url']);
     $paypal_url    = $paypal_url[0];

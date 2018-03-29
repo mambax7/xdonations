@@ -35,10 +35,10 @@ $txn_id = isset($_GET['txn_id']) ? $_GET['txn_id'] : null;
 $txn_id = isset($_POST['txn_id']) ? $_POST['txn_id'] : $txn_id;
 
 // display search box
-$searchForm = new XoopsThemeForm(_AD_XDONATION_SEARCH_FORM, 'searchform', $_SERVER['PHP_SELF'], 'post', true);
-$searchForm->addElement(new XoopsFormText(_AD_XDONATION_SEARCH_TERM, 'txn_id', 20, 20));
-$buttonTray = new XoopsFormElementTray('');
-$sButton    = new XoopsFormButton('', 'search', _SEARCH, 'submit');
+$searchForm = new \XoopsThemeForm(_AD_XDONATION_SEARCH_FORM, 'searchform', $_SERVER['PHP_SELF'], 'post', true);
+$searchForm->addElement(new \XoopsFormText(_AD_XDONATION_SEARCH_TERM, 'txn_id', 20, 20));
+$buttonTray = new \XoopsFormElementTray('');
+$sButton    = new \XoopsFormButton('', 'search', _SEARCH, 'submit');
 $buttonTray->addElement($sButton);
 $searchForm->addElement($buttonTray);
 $searchForm->display();
@@ -57,20 +57,20 @@ if (isset($txn_id) && (0 != $txn_id)) {
 
     $txnRecord     = $xoopsDB->query($sql);
     $row_txnRecord = $xoopsDB->fetchArray($txnRecord); //get the transaction
-    $txnForm       = new XoopsThemeForm(_AD_XDONATION_TXN_FORM, 'txnform', $_SERVER['PHP_SELF'], 'post', true);
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_TXN_ID, $row_txnRecord['txn_id']));
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $row_txnRecord['payment_date']));
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_PMNT_TYPE, $row_txnRecord['payment_type']));
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_TXN_TYPE, $row_txnRecord['txn_type']));
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_ITEM_INFO, $row_txnRecord['item_name'] . ' [' . $row_txnRecord['item_number'] . ']'));
+    $txnForm       = new \XoopsThemeForm(_AD_XDONATION_TXN_FORM, 'txnform', $_SERVER['PHP_SELF'], 'post', true);
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_TXN_ID, $row_txnRecord['txn_id']));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $row_txnRecord['payment_date']));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_PMNT_TYPE, $row_txnRecord['payment_type']));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_TXN_TYPE, $row_txnRecord['txn_type']));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_ITEM_INFO, $row_txnRecord['item_name'] . ' [' . $row_txnRecord['item_number'] . ']'));
     $custInfo = "<a href=\"mailto:{$row_txnRecord['payer_email']}?subject=PayPal%20TXN:%20{$row_txnRecord['txn_id']}\">{$row_txnRecord['full_name']}</a>";
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_CUST_NAME, $custInfo . ' (' . ucfirst($row_txnRecord['payer_status']) . ')'));
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_CUST_ID, $row_txnRecord['payer_id']));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_CUST_NAME, $custInfo . ' (' . ucfirst($row_txnRecord['payer_status']) . ')'));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_CUST_ID, $row_txnRecord['payer_id']));
     if ('' != $row_txnRecord['option_name1']) {
-        $txnForm->addElement(new XoopsFormLabel($row_txnRecord['option_name1'], $row_txnRecord['option_selection1']));
+        $txnForm->addElement(new \XoopsFormLabel($row_txnRecord['option_name1'], $row_txnRecord['option_selection1']));
     }
     if ('' != $row_txnRecord['option_name2']) {
-        $txnForm->addElement(new XoopsFormLabel($row_txnRecord['option_name2'], $row_txnRecord['option_selection2']));
+        $txnForm->addElement(new \XoopsFormLabel($row_txnRecord['option_name2'], $row_txnRecord['option_selection2']));
     }
     $amount = $utility::defineCurrency($row_txnRecord['mc_currency'])
               . $row_txnRecord['mc_gross']
@@ -85,8 +85,8 @@ if (isset($txn_id) && (0 != $txn_id)) {
               . $row_txnRecord['mc_currency']
               . ') '
               . _AD_XDONATION_NETBAL;
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_TXN_AMOUNT, $amount));
-    $txnForm->addElement(new XoopsFormLabel(_AD_XDONATION_TXN_MEMO, $row_txnRecord['memo']));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_TXN_AMOUNT, $amount));
+    $txnForm->addElement(new \XoopsFormLabel(_AD_XDONATION_TXN_MEMO, $row_txnRecord['memo']));
     $txnForm->display();
 } else {
     //list 10 most recent transactions in the database
@@ -105,17 +105,17 @@ if (isset($txn_id) && (0 != $txn_id)) {
      var_dump($txnRecordArray);
      exit();
      */
-    $allForm = new XoopsThemeForm(_AD_XDONATION_TXN_RECENT_FORM, 'txnform', $_SERVER['PHP_SELF'], 'post', true);
+    $allForm = new \XoopsThemeForm(_AD_XDONATION_TXN_RECENT_FORM, 'txnform', $_SERVER['PHP_SELF'], 'post', true);
     while (false !== ($txnRecord = $xoopsDB->fetchArray($txnRecords))) {
         //    foreach ($txnRecordArray as $txnRecord) {
         $thisTray  = 'txnTray_' . $txnRecord['id'];
-        $$thisTray = new XoopsFormElementTray($txnRecord['id'], '<br>', $txnRecord['id']);
+        $$thisTray = new \XoopsFormElementTray($txnRecord['id'], '<br>', $txnRecord['id']);
         $txnLink   = "<a href=\"transaction.php?txn_id={$txnRecord['txn_id']}\">{$txnRecord['txn_id']}</a>";
-        $$thisTray->addElement(new XoopsFormLabel(_AD_XDONATION_TXN_ID, $txnLink));
-        $$thisTray->addElement(new XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $txnRecord['payment_date']));
+        $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_TXN_ID, $txnLink));
+        $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $txnRecord['payment_date']));
         $custInfo = "<a href=\"mailto:{$txnRecord['payer_email']}?subject=PayPal%20TXN:%20{$txnRecord['txn_id']}\">{$txnRecord['full_name']}</a>";
-        $$thisTray->addElement(new XoopsFormLabel(_AD_XDONATION_CUST_NAME, $custInfo . ' (' . ucfirst($txnRecord['payer_status']) . ')'));
-        $$thisTray->addElement(new XoopsFormLabel(_AD_XDONATION_TXN_AMOUNT, $txnRecord['mc_net'] . ' (' . $txnRecord['mc_currency'] . ')'));
+        $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_CUST_NAME, $custInfo . ' (' . ucfirst($txnRecord['payer_status']) . ')'));
+        $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_TXN_AMOUNT, $txnRecord['mc_net'] . ' (' . $txnRecord['mc_currency'] . ')'));
         $allForm->addElement($$thisTray);
     }
     $allForm->display();

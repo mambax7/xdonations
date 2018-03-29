@@ -258,7 +258,7 @@ function treasury()
          . "<td style=\"text-align: center;\">\n"
          . "<form action=\"donations.php\" method=\"post\" name=\"recedit\">\n"
          . "<input name=\"id\" type=\"hidden\">\n";
-    $newDate  = new XoopsFormTextDateSelect('Date', 'StartDate', $size = 15, null);
+    $newDate  = new \XoopsFormTextDateSelect('Date', 'StartDate', $size = 15, null);
     $showDate = $newDate->render();
     echo $showDate . "</td>\n";
     echo "<td style=\"text-align: center; width: 8px;\"><input name=\"Num\" type=\"text\" size=\"8\"></td>\n"
@@ -292,7 +292,7 @@ function addFinancialReg()
     //  $nTime = $_POST['StartYear'].'-'.$_POST['StartMonth'].'-'.$_POST['StartDay'].' '.$time;
     //  $nTime = strtotime($nTime);
     $nTime = strtotime("{$_POST['StartDate']} {$time}");
-    if ($nTime == -1) {
+    if (-1 == $nTime) {
         echo _AD_XDONATION_ERR_BAD_DATE_FORMAT . "<br>\n";
     } else {
         if ('' === $_POST['Name']) {
@@ -320,7 +320,7 @@ function addFinancialReg()
                                    . "')";
 
                 $rvalue = $xoopsDB->query($insertRecordset);
-                echo "$insertRecordset";
+                echo $insertRecordset;
                 echo strftime('%Y-%m-%d', $nTime) . " $_POST[Num] $_POST[Name] $_POST[Descr] $_POST[Amount]<br><br>$insertRecordset";
                 header('Location: donations.php?op=Treasury#AdminTop');
             }
@@ -352,7 +352,7 @@ function editFinancialReg()
     $nTime = $_POST['StartDate'] . ' ' . $time;
     $nTime = strtotime($nTime);
 
-    if ($nTime == -1) {
+    if (-1 == $nTime) {
         echo _AD_XDONATION_ERR_BAD_DATE_FORMAT . "<br>\n";
     } else {
         if ('' === $_POST['Name']) {
@@ -367,10 +367,10 @@ function editFinancialReg()
 
                 $insertRecordset = 'UPDATE `' . $xoopsDB->prefix('donations_financial') . "` SET date='" . strftime('%Y-%m-%d %H:%M:%S', $nTime) . "', num='$_POST[Num]', Name='$_POST[Name]', " . "descr='$_POST[Descr]', amount='$_POST[Amount]' WHERE id='$_POST[id]' LIMIT 1";
 
-                echo "$insertRecordset";
+                echo $insertRecordset;
                 $rvalue = $xoopsDB->query($insertRecordset);
 
-                echo "$_POST[id]" . strftime('%Y-%m-%d', $nTime) . " $_POST[Num] $_POST[Name] $_POST[Descr] $_POST[Amount]<br><br>$insertRecordset";
+                echo (string)$_POST[id] . strftime('%Y-%m-%d', $nTime) . " $_POST[Num] $_POST[Name] $_POST[Descr] $_POST[Amount]<br><br>$insertRecordset";
 
                 header('Location: donations.php?op=Treasury#AdminTop');
             }
@@ -535,7 +535,7 @@ function setConfig()
     $Recordset1           = $xoopsDB->query($query_Recordset1);
     $row_Recordset1       = $xoopsDB->fetchArray($Recordset1);
     $totalRows_Recordset1 = $xoopsDB->getRowsNum($Recordset1);
-    $desc                 = htmlentities($row_Recordset1['text']);
+    $desc                 = htmlentities($row_Recordset1['text'], ENT_QUOTES | ENT_HTML5);
 
     echo "<table style=\"border-width: 1px; width: 100px; text-align: center;\">\n";
     echo '  <tr><td style="text-align: center; width: 100%; font-weight: bold;" colspan="8">' . _AD_XDONATION_SUGGESTED_AMOUNT . "<br></td></tr>\n";
@@ -635,7 +635,7 @@ function setConfig()
     into your PayPal IPN profile.  You can click
     on the "test" link to the right to verify
     that the IPN recorder is functioning correctly.';
-    $desc = htmlentities($desc);
+    $desc = htmlentities($desc, ENT_QUOTES | ENT_HTML5);
     echo "<tr>\n"
          . "  <td title =\"$desc\" style=\"text-align: right; font-weight: bold;\">"
          . _AD_XDONATION_IPN_LINK
@@ -673,7 +673,7 @@ function setConfig()
     $Recordset1           = $xoopsDB->query($query_Recordset1);
     $row_Recordset1       = $xoopsDB->fetchArray($Recordset1);
     $totalRows_Recordset1 = $xoopsDB->getRowsNum($Recordset1);
-    $desc                 = htmlentities($row_Recordset1['text']);
+    $desc                 = htmlentities($row_Recordset1['text'], ENT_QUOTES | ENT_HTML5);
 
     echo "          <table style=\"border-width: 1px; width: 100px; text-align: center;\">\n" . '            <tr><td style="text-align: center; width: 100%; font-weight: bold;" colspan="5">' . _AD_XDONATION_GOAL_HEBDO . "<br></td></tr>\n";
     $row1 = "  <tr>\n" . '    <td style="text-align: center; font-weight: bold;">' . _AD_XDONATION_WEEK . "</td>\n";
@@ -702,7 +702,7 @@ function setConfig()
     $Recordset1           = $xoopsDB->query($query_Recordset1);
     $row_Recordset1       = $xoopsDB->fetchArray($Recordset1);
     $totalRows_Recordset1 = $xoopsDB->getRowsNum($Recordset1);
-    $desc                 = htmlentities($row_Recordset1['text']);
+    $desc                 = htmlentities($row_Recordset1['text'], ENT_QUOTES | ENT_HTML5);
 
     $h = 0;
     echo "<table style=\"border-width: 1px; width: 100px; text-align: center;\">\n";
@@ -731,7 +731,7 @@ function setConfig()
     $Recordset1           = $xoopsDB->query($query_Recordset1);
     $row_Recordset1       = $xoopsDB->fetchArray($Recordset1);
     $totalRows_Recordset1 = $xoopsDB->getRowsNum($Recordset1);
-    $desc                 = htmlentities($row_Recordset1['text']);
+    $desc                 = htmlentities($row_Recordset1['text'], ENT_QUOTES | ENT_HTML5);
 
     echo "<table style=\"border-width: 1px; width: 100px; text-align: center;\">\n";
     echo '  <tr><td style="text-align: center; width: 100%; font-weight: bold;" colspan="5">' . _AD_XDONATION_QUARTER . "<br></td></tr>\n";
@@ -786,7 +786,7 @@ function updateConfig()
                 // Is this is a text field?
                 if (preg_match('/([^-]*)-txt/', $subtype[1], $subtype2)) {
                     $textarea = addslashes($value);
-                    echo "$varnm $subtype2[1] text=> " . nl2br(htmlspecialchars($textarea)) . "<br>\n";
+                    echo "$varnm $subtype2[1] text=> " . nl2br(htmlspecialchars($textarea, ENT_QUOTES | ENT_HTML5)) . "<br>\n";
                     $error &= $utility::updateDb($varnm, $subtype2[1], '0', $textarea);
                 } else {
                     echo "$varnm $subtype[1] => $value<br>\n";
@@ -862,16 +862,16 @@ function showLog()
     $query_Recordset1 = 'SELECT id, log_date, payment_date, logentry FROM ' . $xoopsDB->prefix('donations_translog') . ' ORDER BY log_date DESC';
     $transRecords     = $xoopsDB->query($query_Recordset1);
     $numRows          = $xoopsDB->getRowsNum($transRecords);
-    $logForm          = new XoopsThemeForm(_AD_XDONATION_SHOW_LOG, 'logform', $_SERVER['PHP_SELF'], 'post', true);
+    $logForm          = new \XoopsThemeForm(_AD_XDONATION_SHOW_LOG, 'logform', $_SERVER['PHP_SELF'], 'post', true);
 
     if ($numRows) {
         while (false !== (list($rId, $rLdate, $rPdate, $rLentry) = $xoopsDB->fetchRow($transRecords))) {
             $thisTray  = 'logTray_' . $rId;
-            $$thisTray = new XoopsFormElementTray($rId, '<br>');
-            $$thisTray->addElement(new XoopsFormLabel(_AD_XDONATION_LOG_DATE, $rLdate));
-            $$thisTray->addElement(new XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $rPdate));
+            $$thisTray = new \XoopsFormElementTray($rId, '<br>');
+            $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_LOG_DATE, $rLdate));
+            $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $rPdate));
             $rLentrySplit = '';
-            $rLentry      = htmlspecialchars($rLentry);
+            $rLentry      = htmlspecialchars($rLentry, ENT_QUOTES | ENT_HTML5);
             $dispWidth    = 110;
             do {
                 //                echo '[' . strlen($rLentry) . ']<br>';
@@ -890,19 +890,19 @@ function showLog()
                     $rLentry      = substr($rLentry, $pos);
                 }
             } while (strlen($rLentry) > $dispWidth);
-            $$thisTray->addElement(new XoopsFormLabel(_AD_XDONATION_LOG_ENTRY_TXT, $rLentrySplit . $rLentry));
+            $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_LOG_ENTRY_TXT, $rLentrySplit . $rLentry));
 
-            //            $$thisTray->addElement(new XoopsFormLabel( _AD_XDONATION_LOGENTRY, $rLentry));
+            //            $$thisTray->addElement(new \XoopsFormLabel( _AD_XDONATION_LOGENTRY, $rLentry));
             $logForm->addElement($$thisTray);
         }
-        $buttonTray = new XoopsFormElementTray('');
-        $cButton    = new XoopsFormButton('', 'op', _AD_XDONATION_CLEAR_LOG, 'submit');
+        $buttonTray = new \XoopsFormElementTray('');
+        $cButton    = new \XoopsFormButton('', 'op', _AD_XDONATION_CLEAR_LOG, 'submit');
         $cButton->setExtra("onclick=\"this.form.elements.op.value='ClearLog'\"", true);
         $buttonTray->addElement($cButton);
         $logForm->addElement($buttonTray);
     } else {
         //FIXME: replace this with 'full width' cell
-        $logForm->addElement(new XoopsFormLabel('', _AD_XDONATION_LOG_EMPTY));
+        $logForm->addElement(new \XoopsFormLabel('', _AD_XDONATION_LOG_EMPTY));
     }
     $logForm->display();
 }
@@ -923,7 +923,7 @@ function clearLog($ok = 0)
         echo "<table style=\"text-align: center; border-width: 0px; margin: 4px;\"><tr><td>{$retMsg}</td></tr>";
         echo '<tr><td><input type="submit" value="' . _AD_XDONATION_CONTINUE . '"></td></tr></table>';
         echo '</form>';
-        //        redirect_header('./index.php', 2, $retMsg);
+    //        redirect_header('./index.php', 2, $retMsg);
         //
     } else {
         xoops_confirm(['op' => 'ClearLog', 'ok' => 1], 'index.php', _AD_XDONATION_CLEAR_THIS_LOG, _DELETE);
