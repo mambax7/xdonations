@@ -155,7 +155,7 @@ eval('function xoops_module_install_' . $moduleDirName . '(\XoopsModule $module=
  * https://www.paypal.com/fr_FR/FR/i/btn/btn_donate_LG.gif
  ************************************************************************/
 
-$op = isset($_GET['op']) ? $_GET['op'] : '';
+$op = \Xmf\Request::getString('op', '', 'GET');
 
 switch ($op) {
     case 'update_lg':

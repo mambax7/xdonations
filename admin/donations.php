@@ -56,7 +56,7 @@ function treasury()
 
     // Register paging
     $maxRows_Recordset1  = 10;
-    $pageNum_Recordset1  = isset($_POST['pageNum_Recordset1']) ? (int)$_POST['pageNum_Recordset1'] : 0;
+    $pageNum_Recordset1  = \Xmf\Request::getInt('pageNum_Recordset1', 0, 'POST');
     $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 
     //  $query_Recordset1 = "SELECT id, date, DATE_FORMAT(date, '%d-%b-%Y') as fdate, DATE_FORMAT(date, '%d') as day, DATE_FORMAT(date, '%m') as mon, DATE_FORMAT(date, '%Y') as year, num, name, descr, amount FROM ".$xoopsDB->prefix("donations_financial")." order by date DESC";
@@ -968,8 +968,8 @@ switch ($op) {
         break;
 
     case 'ClearLog':
-        $ok = isset($_GET['ok']) ? (int)$_GET['ok'] : 0;
-        $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : $ok;
+        $ok = \Xmf\Request::getInt('ok', 0, 'GET');
+        $ok = \Xmf\Request::getInt('ok', $ok, 'POST');
         clearLog($ok);
         break;
 
