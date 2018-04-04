@@ -1,5 +1,7 @@
 <?php
 
+use XoopsModules\Xdonations;
+
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 echo '' . XOOPS_ROOT_PATH . '<br>';
 // referer check

@@ -16,6 +16,8 @@
  * @since     ::      File available since version 1.96
  */
 
+use XoopsModules\Xdonations;
+
 require_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 $moduleDirName = basename(dirname(__DIR__));
 global $xoopsConfig;
