@@ -335,7 +335,7 @@ function deleteFinancialReg()
     echo _AD_XDONATION_FIELD_PASSED . "<br>\n";
 
     if (is_numeric($_GET['id']) && ($_GET['id'] > 0)) {
-        $del_Recordset = 'DELETE FROM `' . $xoopsDB->prefix('donations_financial') . '`' . " WHERE `id`='" . (int)$_GET['id'] . "' LIMIT 1";
+        $del_Recordset = 'DELETE FROM `' . $xoopsDB->prefix('donations_financial') . '`' . " WHERE `id`='" . \Xmf\Request::getInt('id', 0, 'GET') . "' LIMIT 1";
         $rvalue        = $xoopsDB->queryF($del_Recordset);
         header('Location: donations.php?op=Treasury#AdminTop');
     } else {
