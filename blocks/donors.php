@@ -87,7 +87,7 @@ function b_donations_donors_show($options)
 
     $ROWS_DONATORS = '';
     // Fill out the donators table tag
-    while (false != ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1))) {
+    while (false !== ($row_Recordset1 = $xoopsDB->fetchArray($Recordset1))) {
         if ($row_Recordset1['amt'] > $currencySign . '0') {
             $ROWS_DONATORS .= '<tr>';
             $ROWS_DONATORS .= '<td style="font-weight: bold;">&nbsp; ';

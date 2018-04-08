@@ -52,7 +52,7 @@ $loglvl = $tr_config['ipn_dbg_lvl'];
 
 // creates a log file in the XOOPS uploads directory
 $lpFile = XOOPS_UPLOAD_PATH . '/xdonations_ipn.log';
-if (false != ($lp = fopen($lpFile, 'wb+'))) {
+if (false !== ($lp = fopen($lpFile, 'wb+'))) {
     dprt(_MD_XDONATION_LOGFILE_CREATED, _INF);
 } else {
     dprt(_MD_XDONATION_LOGFILE_NOT_CREATED, _ERR);

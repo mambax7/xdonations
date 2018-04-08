@@ -348,7 +348,7 @@ class Utility
                 $splitArr = explode('|', $cfg['value']);
                 $newArr   = $val;
                 $i        = 0;
-                while (false != ($singleVar = $splitArr[$i])) {
+                while (false !== ($singleVar = $splitArr[$i])) {
                     if ($singleVar != $val) {
                         $newArr = $newArr . '|' . $singleVar;
                     }
