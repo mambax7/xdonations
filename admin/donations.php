@@ -31,10 +31,10 @@
 
 use XoopsModules\Xdonations;
 
-include __DIR__ . '/../../../include/cp_header.php';
+include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
-// include __DIR__ . '/../class/Utility.php';
+// include  dirname(__DIR__) . '/class/Utility.php';
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 

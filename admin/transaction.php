@@ -18,13 +18,13 @@
 
 use XoopsModules\Xdonations;
 
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once __DIR__ . '/admin_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-// include __DIR__ . '/../class/Utility.php';
+// include  dirname(__DIR__) . '/class/Utility.php';
 
 xoops_cp_header();
 

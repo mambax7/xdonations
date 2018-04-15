@@ -29,5 +29,5 @@
 /* USA                                                                  */
 /************************************************************************/
 
-require_once __DIR__ . '/../../mainfile.php';
+require_once  dirname(dirname(__DIR__)) . '/mainfile.php';
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
