@@ -24,7 +24,7 @@ require_once __DIR__ . '/admin_header.php';
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-// include  dirname(__DIR__) . '/class/Utility.php';
+// require_once dirname(__DIR__) . '/class/Utility.php';
 
 xoops_cp_header();
 

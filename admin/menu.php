@@ -32,8 +32,9 @@
 
 use XoopsModules\Xdonations;
 
-// require_once  dirname(__DIR__) . '/class/Helper.php';
-//require_once  dirname(__DIR__) . '/include/common.php';
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
+/** @var Xdonations\Helper $helper */
 $helper = Xdonations\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');

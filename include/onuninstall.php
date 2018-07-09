@@ -32,19 +32,18 @@ function xoops_module_pre_uninstall_xdonations(\XoopsModule $module)
  */
 function xoops_module_uninstall_xdonations(\XoopsModule $module)
 {
-//    return true;
+    //    return true;
 
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = strtoupper($moduleDirName);
-     $helper      =Xdonations\Helper::getInstance();
+    /** @var Xdonations\Helper $helper */
+    $helper = Xdonations\Helper::getInstance();
 
     /** @var Xdonations\Utility $utility */
-    $utility     = new Xdonations\Utility();
-
+    $utility = new Xdonations\Utility();
 
     $success = true;
     $helper->loadLanguage('admin');
-
 
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist

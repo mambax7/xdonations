@@ -145,9 +145,9 @@ function xdshorten($var, $len = 10)
 
     if (preg_match("/(.{1,$len})\s/", $var, $match)) {
         return $match [1] . '...';
-    } else {
-        return substr($var, 0, $len) . '...';
     }
+
+    return substr($var, 0, $len) . '...';
 }
 
 /**

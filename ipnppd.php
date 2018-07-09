@@ -30,7 +30,7 @@
 /************************************************************************/
 
 //$xoopsOption['nocommon'] = 1;
-include __DIR__ . '/header.php';
+require_once __DIR__   . '/header.php';
 require_once __DIR__ . '/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -58,7 +58,7 @@ if (false !== ($lp = fopen($lpFile, 'wb+'))) {
     dprt(_MD_XDONATION_LOGFILE_NOT_CREATED, _ERR);
 }
 dprt(date('r'), _INF);
-$dbg = (isset($_GET['dbg']) && $_GET['dbg']) ? true : false;
+$dbg = (isset($_GET['dbg']) && $_GET['dbg']);
 
 if ($dbg) {
     dprt(_MD_XDONATION_DEBUGACTIVE, _INF);

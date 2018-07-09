@@ -31,10 +31,10 @@
 
 use XoopsModules\Xdonations;
 
-include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
-// include  dirname(__DIR__) . '/class/Utility.php';
+// require_once dirname(__DIR__) . '/class/Utility.php';
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
@@ -65,7 +65,7 @@ function treasury()
     $Recordset1             = $xoopsDB->query($query_limit_Recordset1);
     $row_Recordset1         = $xoopsDB->fetchArray($Recordset1);
 
-    if (isset($_POST['totalRows_Recordset1'])) {
+    if (\Xmf\Request::hasVar('totalRows_Recordset1', 'POST')) {
         $totalRows_Recordset1 = $_POST['totalRows_Recordset1'];
     } else {
         $all_Recordset1       = $xoopsDB->query($query_Recordset1);
@@ -370,7 +370,7 @@ function editFinancialReg()
                 echo $insertRecordset;
                 $rvalue = $xoopsDB->query($insertRecordset);
 
-                echo (string)$_POST[id] . strftime('%Y-%m-%d', $nTime) . " $_POST[Num] $_POST[Name] $_POST[Descr] $_POST[Amount]<br><br>$insertRecordset";
+                echo (string)$_POST['id'] . strftime('%Y-%m-%d', $nTime) . " $_POST[Num] $_POST[Name] $_POST[Descr] $_POST[Amount]<br><br>$insertRecordset";
 
                 header('Location: donations.php?op=Treasury#AdminTop');
             }
@@ -867,9 +867,9 @@ function showLog()
     if ($numRows) {
         while (false !== (list($rId, $rLdate, $rPdate, $rLentry) = $xoopsDB->fetchRow($transRecords))) {
             $thisTray  = 'logTray_' . $rId;
-            $$thisTray = new \XoopsFormElementTray($rId, '<br>');
-            $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_LOG_DATE, $rLdate));
-            $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $rPdate));
+            ${$thisTray} = new \XoopsFormElementTray($rId, '<br>');
+            ${$thisTray}->addElement(new \XoopsFormLabel(_AD_XDONATION_LOG_DATE, $rLdate));
+            ${$thisTray}->addElement(new \XoopsFormLabel(_AD_XDONATION_PMNT_DATE, $rPdate));
             $rLentrySplit = '';
             $rLentry      = htmlspecialchars($rLentry, ENT_QUOTES | ENT_HTML5);
             $dispWidth    = 110;
@@ -890,10 +890,10 @@ function showLog()
                     $rLentry      = substr($rLentry, $pos);
                 }
             } while (strlen($rLentry) > $dispWidth);
-            $$thisTray->addElement(new \XoopsFormLabel(_AD_XDONATION_LOG_ENTRY_TXT, $rLentrySplit . $rLentry));
+            ${$thisTray}->addElement(new \XoopsFormLabel(_AD_XDONATION_LOG_ENTRY_TXT, $rLentrySplit . $rLentry));
 
-            //            $$thisTray->addElement(new \XoopsFormLabel( _AD_XDONATION_LOGENTRY, $rLentry));
-            $logForm->addElement($$thisTray);
+            //            ${$thisTray}->addElement(new \XoopsFormLabel( _AD_XDONATION_LOGENTRY, $rLentry));
+            $logForm->addElement(${$thisTray});
         }
         $buttonTray = new \XoopsFormElementTray('');
         $cButton    = new \XoopsFormButton('', 'op', _AD_XDONATION_CLEAR_LOG, 'submit');

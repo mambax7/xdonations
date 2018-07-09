@@ -29,10 +29,10 @@
 /* USA                                                                  */
 /************************************************************************/
 
-include __DIR__ . '/header.php';
+require_once __DIR__   . '/header.php';
 require_once __DIR__ . '/class/Utility.php';
 $GLOBALS['xoopsOption']['template_main'] = 'donations_main.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 $tr_config  = $utility::getConfigInfo(); //load the module configuration settings
 $paypal_url = explode('|', $tr_config['paypal_url']);
@@ -113,4 +113,4 @@ $xoopsTpl->assign('DON_DIR', $xoopsModule->getVar('dirname'));
 $xoopsTpl->assign('SUBMIT_BUTTON', _MD_XDONATION_SUBMIT_BUTTON);
 $xoopsTpl->assign('PAYPAL_URL', $paypal_url);
 
-include __DIR__ . '/footer.php';
+require_once __DIR__   . '/footer.php';

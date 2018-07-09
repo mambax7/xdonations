@@ -193,6 +193,7 @@ function b_donations_donatometer_show($options)
                 $var     .= "<tr><td style=\"width: 100%; text-align: {$dmalign};\" colspan=\"2\">\n";
                 // Observe the user's wish regarding revealing their name
                 $muser_id = $row_Recordset3['muser_id'];
+                /** @var \XoopsUser $userfoin */
                 if (0 == strcmp($row_Recordset3['showname'], 'Yes') && ($userfoin = $utility::getUserInfo($muser_id))) {
                     $var .= "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $userfoin->getVar('uid') . "'>" . $userfoin->getVar('uname') . "</a>\n";
                 } else {

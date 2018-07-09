@@ -30,7 +30,7 @@ use XoopsModules\Xdonations;
  */
 function xoops_module_pre_install_xdonations(\XoopsModule $module)
 {
-    include  dirname(__DIR__) . '/preloads/autoloader.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
     /** @var Xdonations\Utility $utility */
     $utility = new \XoopsModules\Xdonations\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -59,7 +59,7 @@ function xoops_module_install_xdonations(\XoopsModule $module)
     require_once   dirname(__DIR__) . '/include/config.php';
 
     $moduleDirName = basename(dirname(__DIR__));
-
+    /** @var Xdonations\Helper $helper */
     $helper       = Xdonations\Helper::getInstance();
     $utility      = new Xdonations\Utility();
     $configurator = new Xdonations\Common\Configurator();
